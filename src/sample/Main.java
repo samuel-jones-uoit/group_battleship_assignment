@@ -20,7 +20,9 @@ public class Main extends Application {
     public static void main(String[] args) {
 
         //launch(args);
+        //BattleShipLobby lobby = new BattleShipLobby("localhost", 27015);
+        //PlayerSet players = lobby.run();
         System.out.println("Welcome To Battleship!");
-
+        BattleShipGame game = new BattleShipGame();
     }
 }
