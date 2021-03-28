@@ -1,4 +1,4 @@
-package sample;
+package battleship;
 
 public class ShipLocation {
     private int startX, startY, endX, endY;
