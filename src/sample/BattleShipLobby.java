@@ -12,9 +12,9 @@ public class BattleShipLobby {
         this.port = port;
     }
 
-    public PlayerSet run(){
+    //public PlayerSet run(){
 
-    }
+    //}
 
     private static Socket getSocket(int port) throws IOException {
         ServerSocket serverSocket = new ServerSocket(port);
