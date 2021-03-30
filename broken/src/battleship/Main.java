@@ -1,4 +1,4 @@
-package sample;
+package battleship;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -72,6 +72,10 @@ public class Main extends Application {
         //BattleShipLobby lobby = new BattleShipLobby("localhost", 27015);
         //PlayerSet players = lobby.run();
         System.out.println("Welcome To Battleship!");
-        BattleShipGame game = new BattleShipGame();
+        Player p1 = new HumanPlayer("Samuel");
+        Player p2 = new BotPlayer("Samuel2");
+        PlayerSet playerSet = new PlayerSet(p1, p2);
+        BattleShipGame game = new BattleShipGame(playerSet);
+        game.start();
     }
 }
