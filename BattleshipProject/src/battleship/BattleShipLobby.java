@@ -12,6 +12,12 @@ public class BattleShipLobby {
         this.port = port;
     }
 
+<<<<<<< HEAD:src/sample/BattleShipLobby.java
+    //public PlayerSet run(){
+
+    //}
+=======
+>>>>>>> samuel:BattleshipProject/src/battleship/BattleShipLobby.java
 
     private static Socket getSocket(int port) throws IOException {
         ServerSocket serverSocket = new ServerSocket(port);
