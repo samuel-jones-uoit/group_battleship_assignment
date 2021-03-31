@@ -35,7 +35,7 @@ public class Main extends Application {
         playButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                setShipsPositions.displayBoard(primaryStage);
+                setShipsPositions.initDisplayBoard(primaryStage);
             }
         });
 

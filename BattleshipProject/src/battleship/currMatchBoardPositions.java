@@ -7,44 +7,66 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
-public class setShipsPositions {
-    private static Scene setShipsScenes;
+public class currMatchBoardPositions {
+    private static Scene currMatchBoard;
     public static Button[][] btns = new Button[10][10];
     private static Label[] numbersLabels = new Label[10];
     private static Label[] lettersLabels = new Label[10];
 
     public static void initDisplayBoard(Stage primaryStage) {
         //Set Ships Position Scene GridPane
-        GridPane setShipsGrid = new GridPane();
-        setShipsGrid.setAlignment(Pos.CENTER);
-        setShipsGrid.setHgap(0);
-        setShipsGrid.setVgap(0);
+        GridPane player1currMatchBoardGrid = new GridPane();
+        player1currMatchBoardGrid.setAlignment(Pos.CENTER_LEFT);
+        player1currMatchBoardGrid.setHgap(0);
+        player1currMatchBoardGrid.setVgap(0);
 
+
+        //player1
         initBtnsArray();
         for(int i = 0; i < btns.length; i++) {
             for (int j = 0; j < btns.length; j++) {
-                setShipsGrid.add(btns[i][j],i+1,j);
+                player1currMatchBoardGrid.add(btns[i][j],i+1,j);
             }
         }
-
         initNumberArray();
         for(int i = 0; i<numbersLabels.length; i++){
-            setShipsGrid.add(numbersLabels[i],i+1,11);
+            player1currMatchBoardGrid.add(numbersLabels[i],i+1,11);
             numbersLabels[i].setAlignment(Pos.CENTER);
         }
-
         initLetterArray();
         for(int i = 0; i<lettersLabels.length; i++){
-            setShipsGrid.add(lettersLabels[i],0, i);
+            player1currMatchBoardGrid.add(lettersLabels[i],0, i);
+            lettersLabels[i].setAlignment(Pos.CENTER);
+        }
+
+        GridPane player2currMatchBoardGrid = new GridPane();
+        player2currMatchBoardGrid.setAlignment(Pos.CENTER_RIGHT);
+        player2currMatchBoardGrid.setHgap(0);
+        player2currMatchBoardGrid.setVgap(0);
+
+        //player2
+        initBtnsArray();
+        for(int i = 0; i < btns.length; i++) {
+            for (int j = 0; j < btns.length; j++) {
+                player2currMatchBoardGrid.add(btns[i][j],i+15,j);
+            }
+        }
+        initNumberArray();
+        for(int i = 0; i<numbersLabels.length; i++){
+            player2currMatchBoardGrid.add(numbersLabels[i],i+15,11);
+            numbersLabels[i].setAlignment(Pos.CENTER);
+        }
+        initLetterArray();
+        for(int i = 0; i<lettersLabels.length; i++){
+            player2currMatchBoardGrid.add(lettersLabels[i],14, i);
             lettersLabels[i].setAlignment(Pos.CENTER);
         }
 
         //Changing Scene
-        setShipsScenes = new Scene(setShipsGrid, 800,600);
-        primaryStage.setScene(setShipsScenes);
+        currMatchBoard = new Scene(player2currMatchBoardGrid, 800,600);
+        currMatchBoard.add(player1currMatchBoardGrid);
+        primaryStage.setScene(currMatchBoard);
         System.out.println("Clicked on Play button");
-
-        currMatchBoardPositions.initDisplayBoard(primaryStage);
     }
 
     private static void initBtnsArray() {
@@ -78,5 +100,4 @@ public class setShipsPositions {
             lettersLabels[i].setWrapText(true);
         }
     }
-
 }
