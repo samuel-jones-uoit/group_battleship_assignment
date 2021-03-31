@@ -14,7 +14,6 @@ public class currMatchBoardPositions {
     private static Label[] lettersLabels = new Label[10];
 
     public static void initDisplayBoard(Stage primaryStage) {
-        Stage secondaryStage;
         //Set Ships Position Scene GridPane
         GridPane currMatchBoardGrid = new GridPane();
         currMatchBoardGrid.setAlignment(Pos.CENTER);

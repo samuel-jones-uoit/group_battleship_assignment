@@ -1,5 +1,7 @@
 package battleship;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -39,12 +41,22 @@ public class setShipsPositions {
             lettersLabels[i].setAlignment(Pos.CENTER);
         }
 
+        Button nextButton = new Button("next");
+        nextButton.setPrefWidth(50);
+        setShipsGrid.add(nextButton, 0, 15);
+        //playButton For Play Button
+        nextButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                currMatchBoardPositions.initDisplayBoard(primaryStage);
+            }
+        });
+
         //Changing Scene
         setShipsScenes = new Scene(setShipsGrid, 800,600);
         primaryStage.setScene(setShipsScenes);
         System.out.println("Clicked on Play button");
 
-        currMatchBoardPositions.initDisplayBoard(primaryStage);
     }
 
     private static void initBtnsArray() {
