@@ -16,7 +16,6 @@ public class Main extends Application {
         primaryStage.show();
     }
 
-
     public static void main(String[] args) {
 
         //launch(args);
@@ -24,8 +23,8 @@ public class Main extends Application {
         //PlayerSet players = lobby.run();
         System.out.println("Welcome To Battleship!");
         Player p1 = new HumanPlayer("Samuel");
-        Player p2 = new BotPlayer("Stupid Bot");
-        PlayerSet playerSet = new PlayerSet(p1, p2);
+        Player p2 = new BotPlayer("StupidBot");
+        PlayerSet playerSet = new PlayerSet(p1,p2);
         BattleShipGame game = new BattleShipGame(playerSet);
         game.start();
     }

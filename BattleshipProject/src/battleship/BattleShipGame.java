@@ -24,6 +24,7 @@ public class BattleShipGame {
 
     public void start() {
         boardP1 = new Board(boardSize, player1, waterSymbol, shipSymbol, hitSymbol, missSymbol);
+        System.out.println(missSymbol);
         boardP2 = new Board(boardSize, player2, waterSymbol, shipSymbol, hitSymbol, missSymbol);
         boardP2.setShips();
         boardP2.display(this.player2); // for testing

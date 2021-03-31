@@ -17,6 +17,7 @@ public class Board {
     private Destroyer destroyer;
     private ArrayList<Ship> shipList;
     Board(int boardSize, Player owner, char waterSymbol, char shipSymbol, char hitSymbol, char missSymbol){
+        this.missSymbol = missSymbol;
         this.boardSize = boardSize;
         this.waterSymbol = waterSymbol;
         this.shipSymbol = shipSymbol;
@@ -26,7 +27,6 @@ public class Board {
         this.owner = owner;
     }
 
-    public int getSize(){ return this.boardSize;}
     private BoardTile[][] fillBoard(int n) {
         BoardTile[][] board = new BoardTile[n][n];
         for (int r = 0; r < n; r++){
@@ -56,34 +56,6 @@ public class Board {
         }
         System.out.println(line);
     }
-    /*
-    Deprecated - but not deleting just in case
-    public void Display(Player viewer){
-        boolean fullAccess = viewer.is(this.owner);
-        BoardTile currentTile;
-        String line;
-        for (int r = 0; r < boardSize; r++){
-            line = "";
-            line += Coordinates.convertRowToChar(r);
-            for (int c = 0; c < boardSize; c++){
-                line += " ";
-                if (!fullAccess){
-                    line += waterSymbol;
-                    continue;
-                }
-                currentTile = this.board[r][c];
-                line += currentTile.getSymbol();
-            }
-            System.out.println(line);
-        }
-        line = " ";
-        for (int c = 0; c < boardSize; c++){
-            line += " ";
-            line += Integer.toString(Coordinates.convertCIndex(c));
-        }
-        System.out.println(line);
-    }
-     */
 
     public BoardTile[][] getViewableBoard(Player viewer){
         boolean fullAccess = viewer.is(this.owner);
@@ -240,7 +212,6 @@ public class Board {
         }
         ShipPartTile t = (ShipPartTile) b; // hopefully this works
         ShipPart p = t.getShipPart();
-        p.hit();
         Ship parent = p.getParent();
         owner.notify("Your " + parent.getName() + " was hit!");
         attacker.notify("You hit " + owner.getName() + "'s " + parent.getName() + "!");

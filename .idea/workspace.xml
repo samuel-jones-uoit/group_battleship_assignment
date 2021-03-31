@@ -20,7 +20,34 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/lib1.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/broken/group_battleship_assignment.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/broken/src/battleship/AircraftCarrier.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/broken/src/battleship/BattleShipGame.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/broken/src/battleship/BattleShipLobby.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/broken/src/battleship/Battleship.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/broken/src/battleship/Board.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/broken/src/battleship/BoardTile.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/broken/src/battleship/BotPlayer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/broken/src/battleship/Controller.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/broken/src/battleship/Coordinates.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/broken/src/battleship/Destroyer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/broken/src/battleship/Frigate.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/broken/src/battleship/HumanPlayer.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/broken/src/battleship/Main.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/broken/src/battleship/Player.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/broken/src/battleship/PlayerSet.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/broken/src/battleship/Ship.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/broken/src/battleship/ShipLocation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/broken/src/battleship/ShipPart.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/broken/src/battleship/ShipPartTile.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/broken/src/battleship/Submarine.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/broken/src/battleship/WaterTile.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/broken/src/battleship/sample.fxml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,11 +131,13 @@
     <property name="MemberChooser.showClasses" value="true" />
     <property name="MemberChooser.sorted" value="false" />
     <property name="OverrideImplement.combined" value="false" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="dynamic.classpath" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/BattleshipProject" />
     <property name="project.structure.last.edited" value="Libraries" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
     <property name="recentsLimit" value="5" />
   </component>
   <component name="RecentsManager">
@@ -145,7 +174,7 @@
     <configuration name="Main" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="battleship.Main" />
       <module name="group_battleship_assignment" />
-      <option name="VM_PARAMETERS" value="--module-path &quot;$PROJECT_DIR$/../../csci2020u/javafx-sdk-11.0.2/lib&quot; --add-modules javafx.controls,javafx.fxml" />
+      <option name="VM_PARAMETERS" value="--module-path ${PATH_TO_FX} --add-modules javafx.controls,javafx.fxml" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="battleship.*" />
@@ -226,44 +255,5 @@
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="true" />
     <option name="INCLUDE_TEXT_INTO_SHELF" value="false" />
-  </component>
-  <component name="WindowStateProjectService">
-    <state x="304" y="160" width="1071" height="754" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1616946219692">
-      <screen x="0" y="25" width="1680" height="952" />
-    </state>
-    <state x="304" y="160" width="1071" height="754" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.25.1680.952@0.25.1680.952" timestamp="1616946219692" />
-    <state x="304" y="161" width="1071" height="706" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.25.1680.957@0.25.1680.957" timestamp="1616877679675" />
-    <state x="653" y="211" key="#com.intellij.ide.util.MemberChooser" timestamp="1616891070711">
-      <screen x="0" y="25" width="1680" height="955" />
-    </state>
-    <state x="653" y="211" key="#com.intellij.ide.util.MemberChooser/0.25.1680.955@0.25.1680.955" timestamp="1616891070711" />
-    <state x="577" y="307" key="#com.intellij.ide.util.TreeClassChooserDialog" timestamp="1616945971158">
-      <screen x="0" y="25" width="1680" height="952" />
-    </state>
-    <state x="577" y="307" key="#com.intellij.ide.util.TreeClassChooserDialog/0.25.1680.952@0.25.1680.952" timestamp="1616945971158" />
-    <state width="1638" height="253" key="GridCell.Tab.0.bottom" timestamp="1616946031994">
-      <screen x="0" y="25" width="1680" height="952" />
-    </state>
-    <state width="1638" height="253" key="GridCell.Tab.0.bottom/0.25.1680.952@0.25.1680.952" timestamp="1616946031994" />
-    <state width="1638" height="253" key="GridCell.Tab.0.bottom/0.25.1680.955@0.25.1680.955" timestamp="1616896378603" />
-    <state width="1638" height="253" key="GridCell.Tab.0.center" timestamp="1616946031993">
-      <screen x="0" y="25" width="1680" height="952" />
-    </state>
-    <state width="1638" height="253" key="GridCell.Tab.0.center/0.25.1680.952@0.25.1680.952" timestamp="1616946031993" />
-    <state width="1638" height="253" key="GridCell.Tab.0.center/0.25.1680.955@0.25.1680.955" timestamp="1616896378602" />
-    <state width="1638" height="253" key="GridCell.Tab.0.left" timestamp="1616946031992">
-      <screen x="0" y="25" width="1680" height="952" />
-    </state>
-    <state width="1638" height="253" key="GridCell.Tab.0.left/0.25.1680.952@0.25.1680.952" timestamp="1616946031992" />
-    <state width="1638" height="253" key="GridCell.Tab.0.left/0.25.1680.955@0.25.1680.955" timestamp="1616896378602" />
-    <state width="1638" height="253" key="GridCell.Tab.0.right" timestamp="1616946031993">
-      <screen x="0" y="25" width="1680" height="952" />
-    </state>
-    <state width="1638" height="253" key="GridCell.Tab.0.right/0.25.1680.952@0.25.1680.952" timestamp="1616946031993" />
-    <state width="1638" height="253" key="GridCell.Tab.0.right/0.25.1680.955@0.25.1680.955" timestamp="1616896378602" />
-    <state x="328" y="79" key="SettingsEditor" timestamp="1616807644281">
-      <screen x="0" y="25" width="1680" height="952" />
-    </state>
-    <state x="328" y="79" key="SettingsEditor/0.25.1680.952@0.25.1680.952" timestamp="1616807644281" />
   </component>
 </project>
