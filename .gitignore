@@ -2,3 +2,4 @@ ClientConnectionHandler.java
 .DS_Store
 *.class
 .idea/
+out/
