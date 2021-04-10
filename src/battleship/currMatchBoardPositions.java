@@ -9,6 +9,7 @@ import javafx.stage.Stage;
 
 public class currMatchBoardPositions {
     private static Scene currMatchBoard;
+    public static Button[][] btnsP1 = new Button[10][10];
     public static Button[][] btns = new Button[10][10];
     private static Label[] numbersLabels = new Label[10];
     private static Label[] lettersLabels = new Label[10];
@@ -22,10 +23,10 @@ public class currMatchBoardPositions {
 
 
         //player1
-        initBtnsArray();
-        for(int i = 0; i < btns.length; i++) {
-            for (int j = 0; j < btns.length; j++) {
-                currMatchBoardGrid.add(btns[i][j],i+1,j);
+        initBtnsP1Array();
+        for(int i = 0; i < btnsP1.length; i++) {
+            for (int j = 0; j < btnsP1.length; j++) {
+                currMatchBoardGrid.add(btnsP1[i][j],i+1,j);
 
             }
         }
@@ -39,6 +40,8 @@ public class currMatchBoardPositions {
             currMatchBoardGrid.add(lettersLabels[i],0, i);
             lettersLabels[i].setAlignment(Pos.CENTER);
         }
+
+
 
         //attack
         initBtnsArray();
@@ -73,6 +76,19 @@ public class currMatchBoardPositions {
                 btns[i][j].setMinSize(32, 32);
                 btns[i][j].setId("waterBlocks");
                 btns[i][j].getStylesheets().addAll(setShipsPositions.class.getResource("style.css").toExternalForm());
+            }
+        }
+    }
+
+    private static void initBtnsP1Array() {
+
+        for(int i = 0; i < btnsP1.length; i++) {
+            for (int j = 0; j < btnsP1.length; j++) {
+                btnsP1[i][j] = new Button();
+                btnsP1[i][j].setMaxSize(32, 32);
+                btnsP1[i][j].setMinSize(32, 32);
+                btnsP1[i][j].setId("waterBlocks");
+                btnsP1[i][j].getStylesheets().addAll(setShipsPositions.class.getResource("style.css").toExternalForm());
             }
         }
     }
