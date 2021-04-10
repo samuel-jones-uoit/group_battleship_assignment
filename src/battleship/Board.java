@@ -42,7 +42,7 @@ public class Board {
     public void display(Player viewer){
         BoardTile[][] accessibleBoard = this.getViewableBoard(viewer);
         String line;
-        System.out.println(this.owner.getName() + "'s board (" + viewer.getName() + "'s view)");
+        owner.notify(this.owner.getName() + "'s board (" + viewer.getName() + "'s view)");
         for (int r = 0; r < this.boardSize; r++){
             line = "";
             line += Coordinates.convertRowToChar(r);
@@ -91,40 +91,26 @@ public class Board {
         owner.setShips();
     }
 
-    private void placeShip(Ship ship){
-        Coordinates end1;
-        Coordinates end2;
-        // temp
-        if (!(this.owner instanceof BotPlayer)){
-            this.display(this.owner);
+    public boolean placeShip(Ship ship, Coordinates end1, Coordinates end2){
+        if (end1.getRow() != end2.getRow() && end1.getColumn() != end2.getColumn()){
+            owner.notify("Invalid Selection!");
+            return false;
         }
-        // loop until its set up
-        while (true){
-            owner.notify("Please enter the row and column ([a-j],[1-10]) of one end of your " + ship.getName() + ":");
-            end1 = owner.getCoordinates();
-            owner.notify("Please enter the row and column ([a-j],[1-10]) of the other end of your " + ship.getName() + ":");
-            end2 = owner.getCoordinates();
-            if (end1.getRow() != end2.getRow() && end1.getColumn() != end2.getColumn()){
-                owner.notify("Invalid Selection!");
-                continue;
-            }
-            // One of these two values is 0 the other is the length of the desired ship placement (this works vertical or horizontal)
-            int length = Math.abs(end1.getRow() - end2.getRow()) + Math.abs(end1.getColumn() - end2.getColumn()) + 1;
-            if (length != ship.getSize()){
-                owner.notify("Invalid Selection: invalid length");
-                continue;
-            }
-            if (!(freeSpace(end1, end2))){
-                owner.notify("Invalid Selection: Space occupied");
-                continue;
-            }
-            placeShip(ship, end1, end2);
-            break;
+        // One of these two values is 0 the other is the length of the desired ship placement (this works vertical or horizontal)
+        int length = Math.abs(end1.getRow() - end2.getRow()) + Math.abs(end1.getColumn() - end2.getColumn()) + 1;
+        if (length != ship.getSize()){
+            owner.notify("Invalid Selection: invalid length");
+            return false;
         }
-
+        if (!(freeSpace(end1, end2))){
+            owner.notify("Invalid Selection: Space occupied");
+            return false;
+        }
+        confirmPlaceShip(ship, end1, end2);
+        return true;
     }
 
-    public void placeShip(Ship ship, Coordinates c1, Coordinates c2){
+    public void confirmPlaceShip(Ship ship, Coordinates c1, Coordinates c2){
         int minValue;
         int maxValue;
         boolean horizontal = c1.getRow() == c2.getRow();

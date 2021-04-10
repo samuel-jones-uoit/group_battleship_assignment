@@ -53,7 +53,7 @@ public class Main extends Application {
         Player player2 = new BotPlayer("bot");
         PlayerSet playerSet = new PlayerSet(player1,player2);
         BattleShipGame game = new BattleShipGame(playerSet);
-        //game.start();
+        game.begin();
     }
 
 

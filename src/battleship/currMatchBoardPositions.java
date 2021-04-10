@@ -8,7 +8,7 @@ import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 public class currMatchBoardPositions {
-    private static Scene currMatchBoard, currMatchBoard2;
+    private static Scene currMatchBoard;
     public static Button[][] btns = new Button[10][10];
     private static Label[] numbersLabels = new Label[10];
     private static Label[] lettersLabels = new Label[10];
@@ -40,7 +40,7 @@ public class currMatchBoardPositions {
             lettersLabels[i].setAlignment(Pos.CENTER);
         }
 
-        //player2
+        //attack
         initBtnsArray();
         for(int i = 0; i < btns.length; i++) {
             for (int j = 0; j < btns.length; j++) {

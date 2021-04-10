@@ -71,6 +71,7 @@ public class setShipsPositions {
 
         //Changing Scene
         instructions = new Label();
+        setShipsGrid.add(instructions,0,16);
         setShipsScenes = new Scene(setShipsGrid, 800,600);
         primaryStage.setScene(setShipsScenes);
         System.out.println("Clicked on Play button");

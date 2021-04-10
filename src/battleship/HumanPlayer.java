@@ -33,7 +33,7 @@ public class HumanPlayer extends Player{
     }
 
     public void notify(String msg){
-        System.out.println(msg);
+        setShipsPositions.setInstructions(msg);
     }
 
     public void setShips(){
