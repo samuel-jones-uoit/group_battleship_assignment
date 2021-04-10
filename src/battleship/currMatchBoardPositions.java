@@ -41,8 +41,6 @@ public class currMatchBoardPositions {
             lettersLabels[i].setAlignment(Pos.CENTER);
         }
 
-
-
         //attack
         initBtnsArray();
         for(int i = 0; i < btns.length; i++) {

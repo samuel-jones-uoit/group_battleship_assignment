@@ -139,6 +139,71 @@ public class Board {
             parts[currIndex - minValue] = newPart;
             this.board[row][column] = new ShipPartTile(this.shipSymbol, this.hitSymbol, newPart);
         }
+        if(owner instanceof HumanPlayer) {
+            changeShipImages(c1, c2);
+        }
+    }
+
+
+    //After Placing Ships Change Tile Pics
+    private static void changeShipImages(Coordinates start, Coordinates end){
+        if(start.getColumn() == end.getColumn()){
+            int length = Math.abs(start.getRow() - end.getRow());
+            System.out.println(length);
+            if(start.getRow() > end.getRow()){
+                setShipsPositions.btns[start.getRow()][start.getColumn()].setId("right");
+                setShipsPositions.btns[start.getRow()][start.getColumn()].getStylesheets().addAll(setShipsPositions.class.getResource("style.css").toExternalForm());
+                setShipsPositions.btns[end.getRow()][end.getColumn()].setId("left");
+                setShipsPositions.btns[end.getRow()][end.getColumn()].getStylesheets().addAll(setShipsPositions.class.getResource("style.css").toExternalForm());
+                if (length>1){
+                    for(int i = (start.getRow()-(length-1)); i<(end.getRow()+ length); i++){
+                        setShipsPositions.btns[i][end.getColumn()].setId("middle");
+                        setShipsPositions.btns[i][end.getColumn()].getStylesheets().addAll(setShipsPositions.class.getResource("style.css").toExternalForm());
+                    }
+                }
+            }
+            else if(start.getRow() < end.getRow()){
+                setShipsPositions.btns[start.getRow()][start.getColumn()].setId("left");
+                setShipsPositions.btns[start.getRow()][start.getColumn()].getStylesheets().addAll(setShipsPositions.class.getResource("style.css").toExternalForm());
+                setShipsPositions.btns[end.getRow()][end.getColumn()].setId("right");
+                setShipsPositions.btns[end.getRow()][end.getColumn()].getStylesheets().addAll(setShipsPositions.class.getResource("style.css").toExternalForm());
+                if (length>1){
+                    for(int i = (end.getRow()+-(length-1)); i<(start.getRow() + length); i++){
+                        setShipsPositions.btns[i][end.getColumn()].setId("middle");
+                        setShipsPositions.btns[i][end.getColumn()].getStylesheets().addAll(setShipsPositions.class.getResource("style.css").toExternalForm());
+                    }
+                }
+            }
+        }
+
+        else if(end.getRow() == start.getRow()){
+            int length = Math.abs(end.getColumn() - start.getColumn());
+            System.out.println(length);
+            if(start.getColumn() > end.getColumn()){
+                setShipsPositions.btns[start.getRow()][start.getColumn()].setId("down");
+                setShipsPositions.btns[start.getRow()][start.getColumn()].getStylesheets().addAll(setShipsPositions.class.getResource("style.css").toExternalForm());
+                setShipsPositions.btns[end.getRow()][end.getColumn()].setId("up");
+                setShipsPositions.btns[end.getRow()][end.getColumn()].getStylesheets().addAll(setShipsPositions.class.getResource("style.css").toExternalForm());
+                if (length>1){
+                    for(int i = (start.getColumn()-(length-1)); i<(end.getColumn()+ length); i++){
+                        setShipsPositions.btns[end.getRow()][i].setId("middle");
+                        setShipsPositions.btns[end.getRow()][i].getStylesheets().addAll(setShipsPositions.class.getResource("style.css").toExternalForm());
+                    }
+                }
+            }
+            else if(start.getColumn() < end.getColumn()){
+                setShipsPositions.btns[start.getRow()][start.getColumn()].setId("up");
+                setShipsPositions.btns[start.getRow()][start.getColumn()].getStylesheets().addAll(setShipsPositions.class.getResource("style.css").toExternalForm());
+                setShipsPositions.btns[end.getRow()][end.getColumn()].setId("down");
+                setShipsPositions.btns[end.getRow()][end.getColumn()].getStylesheets().addAll(setShipsPositions.class.getResource("style.css").toExternalForm());
+                if (length>1){
+                    for(int i = (end.getColumn()+-(length-1)); i<(start.getColumn() + length); i++){
+                        setShipsPositions.btns[end.getRow()][i].setId("middle");
+                        setShipsPositions.btns[end.getRow()][i].getStylesheets().addAll(setShipsPositions.class.getResource("style.css").toExternalForm());
+                    }
+                }
+            }
+        }
     }
 
     private boolean freeSpace(Coordinates c1, Coordinates c2){

@@ -2,29 +2,18 @@
     -fx-background-image: url('resources/water.png')
 }
 
-#1x2H{
-    -fx-background-image: url('resources/1x2H.png')
+#left{
+    -fx-background-image: url('resources/LEFT.png')
 }
-#1x3H{
-    -fx-background-image: url('resources/1x3H.png')
+#right{
+    -fx-background-image: url('resources/RIGHT.png')
 }
-#1x4H{
-    -fx-background-image: url('resources/1x4H.png')
+#up{
+    -fx-background-image: url('resources/UP.png')
 }
-#1x5H{
-    -fx-background-image: url('resources/1x5H.png')
+#down{
+    -fx-background-image: url('resources/DOWN.png')
 }
-
-
-#1x2V{
-    -fx-background-image: url('resources/1x2V.png')
-}
-#1x3V{
-    -fx-background-image: url('resources/1x3V.png')
-}
-#1x4V{
-    -fx-background-image: url('resources/1x4V.png')
-}
-#1x5V{
-    -fx-background-image: url('resources/1x5V.png')
+#middle{
+    -fx-background-image: url('resources/MIDDLE.png')
 }

@@ -45,6 +45,7 @@ public class HumanPlayer extends Player{
         Ship ship = board.getNextShip();
         this.board.placeShip(ship,start,end);
         if(board.allShipsPlaced()){
+            System.out.println("OVER HERE BUD");
             this.bsg.mainGame();
         }
     }
