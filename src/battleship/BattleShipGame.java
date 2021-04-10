@@ -24,11 +24,19 @@ public class BattleShipGame {
 
     public void start() {
         boardP1 = new Board(boardSize, player1, waterSymbol, shipSymbol, hitSymbol, missSymbol);
+        player1.setBoard(boardP1);
+        player1.setBsg(this);
+        setShipsPositions.setPlayer(player1);
         System.out.println(missSymbol);
         boardP2 = new Board(boardSize, player2, waterSymbol, shipSymbol, hitSymbol, missSymbol);
+        player2.setBoard(boardP2);
+        player2.setBsg(this);
         boardP2.setShips();
         boardP2.display(this.player2); // for testing
         boardP1.setShips();
+    }
+
+    public void mainGame(){
         while(boardP1.isAlive() && boardP2.isAlive()){
             attack(boardP1, boardP2);
             if (!(boardP2.isAlive())){

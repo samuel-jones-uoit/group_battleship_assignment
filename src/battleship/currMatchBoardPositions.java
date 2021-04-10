@@ -26,6 +26,7 @@ public class currMatchBoardPositions {
         for(int i = 0; i < btns.length; i++) {
             for (int j = 0; j < btns.length; j++) {
                 currMatchBoardGrid.add(btns[i][j],i+1,j);
+
             }
         }
         initNumberArray();
@@ -38,7 +39,6 @@ public class currMatchBoardPositions {
             currMatchBoardGrid.add(lettersLabels[i],0, i);
             lettersLabels[i].setAlignment(Pos.CENTER);
         }
-
 
         //player2
         initBtnsArray();

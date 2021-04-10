@@ -36,7 +36,9 @@ public class Main extends Application {
             @Override
             public void handle(ActionEvent actionEvent) {
                 setShipsPositions.initDisplayBoard(primaryStage);
+                playGame();
             }
+
         });
 
         mainGrid.add(playButton,0,0);
@@ -45,6 +47,13 @@ public class Main extends Application {
         mainScene = new Scene(mainGrid, 800,600);
         primaryStage.setScene(mainScene);
         primaryStage.show();
+    }
+    private static void playGame(){
+        Player player1 = new HumanPlayer("human");
+        Player player2 = new BotPlayer("bot");
+        PlayerSet playerSet = new PlayerSet(player1,player2);
+        BattleShipGame game = new BattleShipGame(playerSet);
+        //game.start();
     }
 
 

@@ -1,6 +1,8 @@
 package battleship;
 
 import java.util.ArrayList;
+import java.util.Queue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class Board {
     private int boardSize;
@@ -15,7 +17,7 @@ public class Board {
     private Frigate frigate;
     private Submarine submarine;
     private Destroyer destroyer;
-    private ArrayList<Ship> shipList;
+    private Queue<Ship> shipsToPlace;
     Board(int boardSize, Player owner, char waterSymbol, char shipSymbol, char hitSymbol, char missSymbol){
         this.missSymbol = missSymbol;
         this.boardSize = boardSize;
@@ -23,7 +25,8 @@ public class Board {
         this.shipSymbol = shipSymbol;
         this.hitSymbol = hitSymbol;
         this.board = fillBoard(boardSize);
-        this.shipList = new ArrayList<>();
+        this.shipsToPlace = new LinkedBlockingQueue<>();
+
         this.owner = owner;
     }
 
@@ -80,20 +83,12 @@ public class Board {
         submarine = new Submarine();
         destroyer = new Destroyer();
         aircraftCarrier = new AircraftCarrier();
-        shipList.add(battleShip);
-        shipList.add(frigate);
-        shipList.add(submarine);
-        shipList.add(destroyer);
-        shipList.add(aircraftCarrier);
-        placeShip(battleShip);
-        placeShip(frigate);
-        placeShip(submarine);
-        placeShip(destroyer);
-        placeShip(aircraftCarrier);
-        // temp
-        if (!(this.owner instanceof BotPlayer)){
-            this.display(this.owner);
-        }
+        shipsToPlace.add(battleShip);
+        shipsToPlace.add(frigate);
+        shipsToPlace.add(submarine);
+        shipsToPlace.add(destroyer);
+        shipsToPlace.add(aircraftCarrier);
+        owner.setShips();
     }
 
     private void placeShip(Ship ship){
@@ -129,7 +124,7 @@ public class Board {
 
     }
 
-    private void placeShip(Ship ship, Coordinates c1, Coordinates c2){
+    public void placeShip(Ship ship, Coordinates c1, Coordinates c2){
         int minValue;
         int maxValue;
         boolean horizontal = c1.getRow() == c2.getRow();
@@ -190,19 +185,6 @@ public class Board {
         }
         return true;
     }
-    public ArrayList<Ship> getShips(){
-        return this.shipList;
-    }
-
-    public ArrayList<Ship> getLivingShips(){
-        ArrayList<Ship> livingShips = new ArrayList<>();
-        for (Ship s : this.getShips()){
-            if (s.isAlive()){
-                livingShips.add(s);
-            }
-        }
-        return livingShips;
-    }
 
     public void hitSpot(Coordinates coordinates, Player attacker){
         BoardTile b = getTile(coordinates);
@@ -232,5 +214,12 @@ public class Board {
 
     public BoardTile getTile(Coordinates coordinates){
         return this.board[coordinates.getRow()][coordinates.getColumn()];
+    }
+    public Ship getNextShip(){
+        return shipsToPlace.remove();
+    }
+
+    public boolean allShipsPlaced(){
+        return shipsToPlace.isEmpty();
     }
 }

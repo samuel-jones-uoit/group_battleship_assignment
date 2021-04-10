@@ -14,6 +14,9 @@ public class setShipsPositions {
     public static Button[][] btns = new Button[10][10];
     private static Label[] numbersLabels = new Label[10];
     private static Label[] lettersLabels = new Label[10];
+    private static Label instructions;
+    private static HumanPlayer player1;
+    private static Coordinates previous =null;
 
     public static void initDisplayBoard(Stage primaryStage) {
         //Set Ships Position Scene GridPane
@@ -44,6 +47,20 @@ public class setShipsPositions {
         Button nextButton = new Button("next");
         nextButton.setPrefWidth(50);
         setShipsGrid.add(nextButton, 0, 15);
+
+        for (int i = 0; i <= 9;i++) {
+            for(int j = 0; j <= 9;j++) {
+                final int finalI = i;
+                final int finalJ = j;
+                btns[i][j].setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        System.out.println(finalI +" " +""+ finalJ);
+                        buttonPressed(finalI, finalJ);
+                    }
+                });
+            }
+        }
         //playButton For Play Button
         nextButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -53,6 +70,7 @@ public class setShipsPositions {
         });
 
         //Changing Scene
+        instructions = new Label();
         setShipsScenes = new Scene(setShipsGrid, 800,600);
         primaryStage.setScene(setShipsScenes);
         System.out.println("Clicked on Play button");
@@ -91,4 +109,21 @@ public class setShipsPositions {
         }
     }
 
+    public static void setInstructions(String message){
+        instructions.setText(message);
+    }
+
+    public static void setPlayer (HumanPlayer player){
+        player1 = player;
+    }
+
+    private static void buttonPressed(int i, int j){
+        if(previous == null){
+            previous = new Coordinates(i,j);
+            return;
+        }
+        Coordinates current = new Coordinates(i,j);
+        player1.placeShip(previous, current);
+        previous = null;
+    }
 }

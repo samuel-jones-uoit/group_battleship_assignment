@@ -6,9 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class HumanPlayer extends Player{
-    public HumanPlayer(String name){
-        super(name);
-    }
+    public HumanPlayer(String name){super(name);}
 
     public Coordinates getCoordinates() {
         int row;
@@ -36,5 +34,18 @@ public class HumanPlayer extends Player{
 
     public void notify(String msg){
         System.out.println(msg);
+    }
+
+    public void setShips(){
+        setShipsPositions.setInstructions("Please click where you would like to place the front of you ship");
+        setShipsPositions.setPlayer(this);
+    }
+
+    public void placeShip(Coordinates start, Coordinates end){
+        Ship ship = board.getNextShip();
+        this.board.placeShip(ship,start,end);
+        if(board.allShipsPlaced()){
+            this.bsg.mainGame();
+        }
     }
 }

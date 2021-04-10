@@ -14,4 +14,8 @@ public class BotPlayer extends Player{
         return;
     }
 
+    @Override
+    public void setShips() {
+
+    }
 }
