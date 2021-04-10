@@ -7,6 +7,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
+import java.lang.reflect.Array;
+
 public class currMatchBoardPositions {
     private static Scene currMatchBoard;
     public static Button[][] btnsP1 = new Button[10][10];
@@ -109,4 +111,13 @@ public class currMatchBoardPositions {
             lettersLabels[i].setWrapText(true);
         }
     }
+
+    public static void createShips(BoardTile[][] board){
+        for (int i = 0; i<board.length; i++){
+            for (int j = 0; j< board.length; j++){
+                btnsP1[i][j].setId(board[i][j].getSymbol());
+            }
+        }
+    }
+
 }

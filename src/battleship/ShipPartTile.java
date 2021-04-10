@@ -1,9 +1,9 @@
 package battleship;
 
 public class ShipPartTile extends BoardTile{
-    private char hitSymbol;
+    private String hitSymbol;
     private ShipPart part;
-    public ShipPartTile(char shipSymbol, char hitSymbol, ShipPart part){
+    public ShipPartTile(String shipSymbol, String hitSymbol, ShipPart part){
         this.symbol = shipSymbol;
         this.hitSymbol = hitSymbol;
         this.part = part;

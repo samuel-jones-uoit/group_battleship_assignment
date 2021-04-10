@@ -56,7 +56,7 @@ public class setShipsPositions {
                     @Override
                     public void handle(ActionEvent actionEvent) {
                         System.out.println(finalI +" " +""+ finalJ);
-                        buttonPressed(finalI, finalJ);
+                        buttonPressed(finalI, finalJ, primaryStage);
                     }
                 });
             }
@@ -118,13 +118,17 @@ public class setShipsPositions {
         player1 = player;
     }
 
-    private static void buttonPressed(int i, int j){
+    private static void buttonPressed(int i, int j, Stage primaryStage){
         if(previous == null){
             previous = new Coordinates(i,j);
             return;
         }
         Coordinates current = new Coordinates(i,j);
-        player1.placeShip(previous, current);
+        player1.placeShip(previous, current, primaryStage);
         previous = null;
+    }
+
+    public static void changeScene(Stage primaryStage) {
+        currMatchBoardPositions.initDisplayBoard(primaryStage);
     }
 }

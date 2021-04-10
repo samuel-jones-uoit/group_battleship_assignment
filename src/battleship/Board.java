@@ -1,16 +1,15 @@
 package battleship;
 
-import java.util.ArrayList;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class Board {
     private int boardSize;
     private BoardTile[][] board;
-    private char waterSymbol;
-    private char shipSymbol;
-    private char hitSymbol;
-    private char missSymbol;
+    private String waterSymbol;
+    private String shipSymbol;
+    private String hitSymbol;
+    private String missSymbol;
     private Player owner;
     private Battleship battleShip;
     private AircraftCarrier aircraftCarrier;
@@ -18,7 +17,7 @@ public class Board {
     private Submarine submarine;
     private Destroyer destroyer;
     private Queue<Ship> shipsToPlace;
-    Board(int boardSize, Player owner, char waterSymbol, char shipSymbol, char hitSymbol, char missSymbol){
+    Board(int boardSize, Player owner, String waterSymbol, String shipSymbol, String hitSymbol, String missSymbol){
         this.missSymbol = missSymbol;
         this.boardSize = boardSize;
         this.waterSymbol = waterSymbol;

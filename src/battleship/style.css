@@ -17,3 +17,10 @@
 #middle{
     -fx-background-image: url('resources/MIDDLE.png')
 }
+
+#hit{
+    -fx-background-image: url('resources/hit.png')
+}
+#miss{
+    -fx-background-image: url('resources/miss.png')
+}

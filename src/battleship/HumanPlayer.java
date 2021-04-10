@@ -1,5 +1,7 @@
 package battleship;
 
+import javafx.stage.Stage;
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.regex.Matcher;
@@ -41,12 +43,13 @@ public class HumanPlayer extends Player{
         setShipsPositions.setPlayer(this);
     }
 
-    public void placeShip(Coordinates start, Coordinates end){
+    public void placeShip(Coordinates start, Coordinates end, Stage primaryStage){
         Ship ship = board.getNextShip();
         this.board.placeShip(ship,start,end);
         if(board.allShipsPlaced()){
             System.out.println("OVER HERE BUD");
-            this.bsg.mainGame();
+            setShipsPositions.changeScene(primaryStage);
+            //this.bsg.mainGame();
         }
     }
 }

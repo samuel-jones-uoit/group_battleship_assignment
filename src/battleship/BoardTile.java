@@ -1,9 +1,9 @@
 package battleship;
 
 public abstract class BoardTile {
-    protected char symbol;
+    protected String symbol;
     public abstract void hit();
-    public char getSymbol(){
+    public String getSymbol(){
         return this.symbol;
     }
     public abstract boolean isHit();

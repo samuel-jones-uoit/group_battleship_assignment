@@ -1,24 +1,22 @@
 package battleship;
 
-import java.util.ArrayList;
-
 public class BattleShipGame {
     private Player player1;
     private Player player2;
-    private char waterSymbol;
-    private char shipSymbol;
-    private char hitSymbol;
-    private char missSymbol;
+    private String waterSymbol;
+    private String shipSymbol;
+    private String hitSymbol;
+    private String missSymbol;
     private Board boardP1;
     private Board boardP2;
     private static final int boardSize = 10;
     BattleShipGame(PlayerSet players){
         this.player1 = players.getPlayer1();
         this.player2 = players.getPlayer2();
-        this.waterSymbol = '~';
-        this.shipSymbol = '*';
-        this.hitSymbol = 'X';
-        this.missSymbol = 'O';
+        this.waterSymbol = "water";
+//        this.shipSymbol = ';
+        this.hitSymbol = "hit";
+        this.missSymbol = "miss";
     }
 
 
@@ -36,13 +34,13 @@ public class BattleShipGame {
     }
 
     public void mainGame(){
-        while(boardP1.isAlive() && boardP2.isAlive()){
-            attack(boardP1, boardP2);
-            if (!(boardP2.isAlive())){
-                break;
-            }
-            attack(boardP2, boardP1);
-        }
+//        while(boardP1.isAlive() && boardP2.isAlive()){
+//            attack(boardP1, boardP2);
+//            if (!(boardP2.isAlive())){
+//                break;
+//            }
+//            attack(boardP2, boardP1);
+//        }
 
         if (boardP1.isAlive()){
             System.out.println(player1.getName() + " wins!");
