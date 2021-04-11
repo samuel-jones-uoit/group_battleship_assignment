@@ -28,7 +28,7 @@ public class setShipsPositions {
         initBtnsArray();
         for(int i = 0; i < btns.length; i++) {
             for (int j = 0; j < btns.length; j++) {
-                setShipsGrid.add(btns[i][j],i+1,j);
+                setShipsGrid.add(btns[i][j],j+1,i);
             }
         }
 
@@ -55,7 +55,6 @@ public class setShipsPositions {
                 btns[i][j].setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent actionEvent) {
-                        System.out.println(finalI +" " +""+ finalJ);
                         buttonPressed(finalI, finalJ, primaryStage);
                     }
                 });
@@ -130,5 +129,12 @@ public class setShipsPositions {
 
     public static void changeScene(Stage primaryStage) {
         currMatchBoardPositions.initDisplayBoard(primaryStage);
+    }
+    public static void displayBoard(String[][] symbols){
+        for (int i = 0; i < symbols.length; i++){
+            for (int j = 0; j < symbols.length; j++){
+                btns[i][j].setId(symbols[i][j]);
+            }
+        }
     }
 }

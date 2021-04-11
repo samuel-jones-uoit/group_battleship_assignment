@@ -4,7 +4,6 @@ public class BattleShipGame {
     private Player player1;
     private Player player2;
     private String waterSymbol;
-    private String shipSymbol;
     private String hitSymbol;
     private String missSymbol;
     private Board boardP1;
@@ -13,22 +12,22 @@ public class BattleShipGame {
     BattleShipGame(PlayerSet players){
         this.player1 = players.getPlayer1();
         this.player2 = players.getPlayer2();
-        this.waterSymbol = "water";
-//        this.shipSymbol = ';
+        this.waterSymbol = "waterBlocks";
         this.hitSymbol = "hit";
         this.missSymbol = "miss";
     }
 
 
     public void begin() {
-        boardP1 = new Board(boardSize, player1, waterSymbol, shipSymbol, hitSymbol, missSymbol);
+        boardP1 = new Board(boardSize, player1, waterSymbol, hitSymbol, missSymbol);
         player1.setBoard(boardP1);
         player1.setBsg(this);
         setShipsPositions.setPlayer((HumanPlayer) player1);
-        System.out.println(missSymbol);
-        boardP2 = new Board(boardSize, player2, waterSymbol, shipSymbol, hitSymbol, missSymbol);
+        boardP2 = new Board(boardSize, player2, waterSymbol, hitSymbol, missSymbol);
         player2.setBoard(boardP2);
         player2.setBsg(this);
+        player1.setEnemyBoard(boardP2);
+        player2.setEnemyBoard(boardP1);
         boardP2.setShips();
         boardP1.setShips();
     }
@@ -41,30 +40,29 @@ public class BattleShipGame {
 //            }
 //            attack(boardP2, boardP1);
 //        }
-
-        if (boardP1.isAlive()){
-            System.out.println(player1.getName() + " wins!");
-        }else{
-            System.out.println(player2.getName() + " wins!");
-        }
+        player1.showBoard();
+        player2.showBoard();
+        player1.makeAttack();
     }
 
-    private void attack(Board attacker, Board victim) {
-        Player owner = attacker.getOwner();
-        if (!(owner instanceof BotPlayer)){
-            victim.display(owner);
-        }
-        boolean valid = false;
-        Coordinates attackCoordinates = new Coordinates(0,0); // Intellij thinks it needs initialization
-        while (!valid) {
-            owner.notify("Enter coordinates on your victim's board");
-            attackCoordinates = owner.getCoordinates();
-            valid = validateAttack(attackCoordinates, victim.getViewableBoard(victim.getOwner()));
-            if (!valid){
-                System.out.println("Invalid Selection!");
-            }
+    public boolean attack(Board attacker, Board victim, Coordinates attackCoordinates) {
+        if (!validateAttack(attackCoordinates, victim.getViewableBoard(victim.getOwner()))){
+            attacker.getOwner().notify("Invalid attack!");
+            return false;
         }
         victim.hitSpot(attackCoordinates, attacker.getOwner());
+        attacker.getOwner().showBoard();
+        victim.getOwner().showBoard();
+        if (!boardP2.isAlive()){
+            player1.notify(player1.getName() + " wins!");
+            player2.notify(player1.getName() + " wins!");
+            System.out.println("Pretend its done!!");
+        }else if (!boardP1.isAlive()){
+            player1.notify(player2.getName() + " wins!");
+            player2.notify(player2.getName() + " wins!");
+            System.out.println("Pretend its done!!");
+        }
+        return true;
     }
 
     private boolean validateAttack(Coordinates attackCoordinates, BoardTile[][] victimBoard) {

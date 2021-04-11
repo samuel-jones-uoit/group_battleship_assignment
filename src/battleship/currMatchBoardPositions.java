@@ -1,5 +1,7 @@
 package battleship;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -7,15 +9,17 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
-import java.lang.reflect.Array;
-
 public class currMatchBoardPositions {
     private static Scene currMatchBoard;
     public static Button[][] btnsP1 = new Button[10][10];
-    public static Button[][] btns = new Button[10][10];
+    public static Button[][] btnsP2 = new Button[10][10];
     private static Label[] numbersLabels = new Label[10];
     private static Label[] lettersLabels = new Label[10];
+    private static HumanPlayer player1;
 
+    public static void setPlayer1(HumanPlayer p1){
+        player1 = p1;
+    }
     public static void initDisplayBoard(Stage primaryStage) {
         //Set Ships Position Scene GridPane
         GridPane currMatchBoardGrid = new GridPane();
@@ -28,8 +32,7 @@ public class currMatchBoardPositions {
         initBtnsP1Array();
         for(int i = 0; i < btnsP1.length; i++) {
             for (int j = 0; j < btnsP1.length; j++) {
-                currMatchBoardGrid.add(btnsP1[i][j],i+1,j);
-
+                currMatchBoardGrid.add(btnsP1[i][j],j+1,i);
             }
         }
         initNumberArray();
@@ -45,9 +48,17 @@ public class currMatchBoardPositions {
 
         //attack
         initBtnsArray();
-        for(int i = 0; i < btns.length; i++) {
-            for (int j = 0; j < btns.length; j++) {
-                currMatchBoardGrid.add(btns[i][j],i+15,j);
+        for(int i = 0; i < btnsP2.length; i++) {
+            for (int j = 0; j < btnsP2.length; j++) {
+                currMatchBoardGrid.add(btnsP2[i][j],i+15,j);
+                final int finalI = i;
+                final int finalJ = j;
+                btnsP2[i][j].setOnAction(new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent actionEvent) {
+                        buttonPressed(finalI, finalJ, primaryStage);
+                    }
+                });
             }
         }
         initNumberArray();
@@ -67,15 +78,19 @@ public class currMatchBoardPositions {
         System.out.println("Clicked on Play button");
     }
 
+    private static void buttonPressed(int finalI, int finalJ, Stage primaryStage) {
+        player1.GUIAttack(finalI, finalJ);
+    }
+
     private static void initBtnsArray() {
 
-        for(int i = 0; i < btns.length; i++) {
-            for (int j = 0; j < btns.length; j++) {
-                btns[i][j] = new Button();
-                btns[i][j].setMaxSize(32, 32);
-                btns[i][j].setMinSize(32, 32);
-                btns[i][j].setId("waterBlocks");
-                btns[i][j].getStylesheets().addAll(setShipsPositions.class.getResource("style.css").toExternalForm());
+        for(int i = 0; i < btnsP2.length; i++) {
+            for (int j = 0; j < btnsP2.length; j++) {
+                btnsP2[i][j] = new Button();
+                btnsP2[i][j].setMaxSize(32, 32);
+                btnsP2[i][j].setMinSize(32, 32);
+                btnsP2[i][j].setId("waterBlocks");
+                btnsP2[i][j].getStylesheets().addAll(setShipsPositions.class.getResource("style.css").toExternalForm());
             }
         }
     }
@@ -112,12 +127,20 @@ public class currMatchBoardPositions {
         }
     }
 
-    public static void createShips(BoardTile[][] board){
-        for (int i = 0; i<board.length; i++){
-            for (int j = 0; j< board.length; j++){
-                btnsP1[i][j].setId(board[i][j].getSymbol());
+
+    public static void displayLeftBoard(String[][] myBoardGUI) {
+        displayBoard(myBoardGUI, btnsP1);
+    }
+
+    public static void displayRightBoard(String[][] enemyBoardGUI) {
+        displayBoard(enemyBoardGUI, btnsP2);
+    }
+
+    private static void displayBoard(String[][] symbols, Button[][] buttons){
+        for (int i = 0; i < symbols.length; i++){
+            for (int j = 0; j < symbols.length; j++){
+                buttons[i][j].setId(symbols[i][j]);
             }
         }
     }
-
 }

@@ -7,7 +7,6 @@ public class Board {
     private int boardSize;
     private BoardTile[][] board;
     private String waterSymbol;
-    private String shipSymbol;
     private String hitSymbol;
     private String missSymbol;
     private Player owner;
@@ -17,11 +16,10 @@ public class Board {
     private Submarine submarine;
     private Destroyer destroyer;
     private Queue<Ship> shipsToPlace;
-    Board(int boardSize, Player owner, String waterSymbol, String shipSymbol, String hitSymbol, String missSymbol){
+    Board(int boardSize, Player owner, String waterSymbol, String hitSymbol, String missSymbol){
         this.missSymbol = missSymbol;
         this.boardSize = boardSize;
         this.waterSymbol = waterSymbol;
-        this.shipSymbol = shipSymbol;
         this.hitSymbol = hitSymbol;
         this.board = fillBoard(boardSize);
         this.shipsToPlace = new LinkedBlockingQueue<>();
@@ -113,6 +111,10 @@ public class Board {
         int minValue;
         int maxValue;
         boolean horizontal = c1.getRow() == c2.getRow();
+        System.out.println(horizontal);
+        System.out.println(c1.getRow());
+        System.out.println(c2.getRow());
+        System.out.println("SDSDSD");
         // initialization not necessary but IntelliJ can't figure that out
         int row = 0;
         int column = 0;
@@ -136,10 +138,10 @@ public class Board {
             // don't need to check if its been hit because haven't got to that part of the game
             newPart = new ShipPart(ship);
             parts[currIndex - minValue] = newPart;
-            this.board[row][column] = new ShipPartTile(this.shipSymbol, this.hitSymbol, newPart);
+            this.board[row][column] = new ShipPartTile(getSymbolID(ship, currIndex - minValue, horizontal), this.hitSymbol, newPart);
         }
         if(owner instanceof HumanPlayer) {
-            changeShipImages(c1, c2);
+            ((HumanPlayer) owner).showBoardBeforeGame();
         }
     }
 
@@ -150,9 +152,9 @@ public class Board {
             int length = Math.abs(start.getRow() - end.getRow());
             System.out.println(length);
             if(start.getRow() > end.getRow()){
-                setShipsPositions.btns[start.getRow()][start.getColumn()].setId("right");
+                setShipsPositions.btns[start.getRow()][start.getColumn()].setId("down");
                 setShipsPositions.btns[start.getRow()][start.getColumn()].getStylesheets().addAll(setShipsPositions.class.getResource("style.css").toExternalForm());
-                setShipsPositions.btns[end.getRow()][end.getColumn()].setId("left");
+                setShipsPositions.btns[end.getRow()][end.getColumn()].setId("up");
                 setShipsPositions.btns[end.getRow()][end.getColumn()].getStylesheets().addAll(setShipsPositions.class.getResource("style.css").toExternalForm());
                 if (length>1){
                     for(int i = (start.getRow()-(length-1)); i<(end.getRow()+ length); i++){
@@ -162,9 +164,9 @@ public class Board {
                 }
             }
             else if(start.getRow() < end.getRow()){
-                setShipsPositions.btns[start.getRow()][start.getColumn()].setId("left");
+                setShipsPositions.btns[start.getRow()][start.getColumn()].setId("down");
                 setShipsPositions.btns[start.getRow()][start.getColumn()].getStylesheets().addAll(setShipsPositions.class.getResource("style.css").toExternalForm());
-                setShipsPositions.btns[end.getRow()][end.getColumn()].setId("right");
+                setShipsPositions.btns[end.getRow()][end.getColumn()].setId("up");
                 setShipsPositions.btns[end.getRow()][end.getColumn()].getStylesheets().addAll(setShipsPositions.class.getResource("style.css").toExternalForm());
                 if (length>1){
                     for(int i = (end.getRow()+-(length-1)); i<(start.getRow() + length); i++){
@@ -179,9 +181,9 @@ public class Board {
             int length = Math.abs(end.getColumn() - start.getColumn());
             System.out.println(length);
             if(start.getColumn() > end.getColumn()){
-                setShipsPositions.btns[start.getRow()][start.getColumn()].setId("down");
+                setShipsPositions.btns[start.getRow()][start.getColumn()].setId("left");
                 setShipsPositions.btns[start.getRow()][start.getColumn()].getStylesheets().addAll(setShipsPositions.class.getResource("style.css").toExternalForm());
-                setShipsPositions.btns[end.getRow()][end.getColumn()].setId("up");
+                setShipsPositions.btns[end.getRow()][end.getColumn()].setId("right");
                 setShipsPositions.btns[end.getRow()][end.getColumn()].getStylesheets().addAll(setShipsPositions.class.getResource("style.css").toExternalForm());
                 if (length>1){
                     for(int i = (start.getColumn()-(length-1)); i<(end.getColumn()+ length); i++){
@@ -191,9 +193,9 @@ public class Board {
                 }
             }
             else if(start.getColumn() < end.getColumn()){
-                setShipsPositions.btns[start.getRow()][start.getColumn()].setId("up");
+                setShipsPositions.btns[start.getRow()][start.getColumn()].setId("left");
                 setShipsPositions.btns[start.getRow()][start.getColumn()].getStylesheets().addAll(setShipsPositions.class.getResource("style.css").toExternalForm());
-                setShipsPositions.btns[end.getRow()][end.getColumn()].setId("down");
+                setShipsPositions.btns[end.getRow()][end.getColumn()].setId("right");
                 setShipsPositions.btns[end.getRow()][end.getColumn()].getStylesheets().addAll(setShipsPositions.class.getResource("style.css").toExternalForm());
                 if (length>1){
                     for(int i = (end.getColumn()+-(length-1)); i<(start.getColumn() + length); i++){
@@ -266,10 +268,36 @@ public class Board {
         return this.board[coordinates.getRow()][coordinates.getColumn()];
     }
     public Ship getNextShip(){
-        return shipsToPlace.remove();
+        return shipsToPlace.peek();
+    }
+    public void removeShip(){
+        shipsToPlace.remove();
     }
 
     public boolean allShipsPlaced(){
         return shipsToPlace.isEmpty();
+    }
+
+    private String getSymbolID(Ship ship, int index, boolean horiz){
+        if (index != 0 && index != ship.getSize() -1){
+            return "middle";
+        }
+
+        if (index == 0){
+            if (horiz){
+                return "left";
+            }
+            return "up";
+        }
+
+        if (horiz) {
+            return "right";
+        }
+
+        return "down";
+    }
+
+    public int getBoardSize(){
+        return this.boardSize;
     }
 }
