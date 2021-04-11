@@ -41,4 +41,14 @@ public class Coordinates {
         // not found
         return -1;
     }
+    public static Coordinates fromString(String coordinates){
+        return new Coordinates(Coordinates.convertCharToRow(coordinates.charAt(0)), Integer.parseInt(coordinates.substring(1)));
+    }
+
+    public String toString(){
+        String newString = "";
+        newString += convertRowToChar(this.row);
+        newString += Integer.toString(this.column);
+        return newString;
+    }
 }

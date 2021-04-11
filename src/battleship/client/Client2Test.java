@@ -1,6 +1,6 @@
-/*package battleship;
+package battleship.client;
 
-import battleship.client.HumanPlayer;
+import battleship.*;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -10,13 +10,15 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-public class Main extends Application {
+import java.io.IOException;
 
-    Scene mainScene, playScene;
+public class Client2Test extends Application {
+
+    Scene mainScene;
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
-        primaryStage.setTitle("BattleShip");
+    public void start(Stage primaryStage) {
+        primaryStage.setTitle("BattleShip2");
 
         //Main Menu Scene GridPane
         GridPane mainGrid = new GridPane();
@@ -50,25 +52,21 @@ public class Main extends Application {
         primaryStage.show();
     }
     private static void playGame(){
-        Player player1 = new HumanPlayer("human");
-        Player player2 = new BotPlayer("bot");
-        PlayerSet playerSet = new PlayerSet(player1,player2);
-        BattleShipGame game = new BattleShipGame(playerSet);
-        game.begin();
+        try{
+            ClientJoiner joiner = new ClientJoiner("localhost", 16789);
+            JoinInfo joinInfo = joiner.join("Player2");
+            Connection connection = joinInfo.getConnection();
+            PlayerSet players = joinInfo.getPlayers();
+            System.out.println("Welcome To Battleship!");
+            ClientGame localGame = new ClientGame(connection, players);
+            localGame.start();
+        }catch (IOException | RejectedJoinException e){
+            e.printStackTrace();
+        }
     }
 
 
     public static void main(String[] args) {
-
         launch(args);
-        //BattleShipLobby lobby = new BattleShipLobby("localhost", 27015);
-        //PlayerSet players = lobby.run();
-        //System.out.println("Welcome To Battleship!");
-       // Player p1 = new HumanPlayer("Samuel");
-       // Player p2 = new BotPlayer("Stupid Bot");
-     //   PlayerSet playerSet = new PlayerSet(p1, p2);
-     //   BattleShipGame game = new BattleShipGame(playerSet);
-      //  game.start();
     }
 }
-*/

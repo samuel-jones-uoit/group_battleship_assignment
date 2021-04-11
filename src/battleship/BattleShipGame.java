@@ -1,4 +1,6 @@
-package battleship;
+/*package battleship;
+
+import battleship.client.HumanPlayer;
 
 public class BattleShipGame {
     private Player player1;
@@ -9,7 +11,7 @@ public class BattleShipGame {
     private Board boardP1;
     private Board boardP2;
     private static final int boardSize = 10;
-    BattleShipGame(PlayerSet players){
+    public BattleShipGame(PlayerSet players){
         this.player1 = players.getPlayer1();
         this.player2 = players.getPlayer2();
         this.waterSymbol = "waterBlocks";
@@ -71,3 +73,4 @@ public class BattleShipGame {
     }
 
 }
+*/

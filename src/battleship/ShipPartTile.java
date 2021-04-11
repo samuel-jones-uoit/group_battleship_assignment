@@ -1,11 +1,10 @@
 package battleship;
 
 public class ShipPartTile extends BoardTile{
-    private String hitSymbol;
+    private static final String hitSymbol = "hit";
     private ShipPart part;
-    public ShipPartTile(String shipSymbol, String hitSymbol, ShipPart part){
+    public ShipPartTile(String shipSymbol, ShipPart part){
         this.symbol = shipSymbol;
-        this.hitSymbol = hitSymbol;
         this.part = part;
     }
 
@@ -13,7 +12,7 @@ public class ShipPartTile extends BoardTile{
         return this.part;
     }
     public void hit(){
-        this.symbol = this.hitSymbol;
+        this.symbol = hitSymbol;
         this.part.hit();
     }
 

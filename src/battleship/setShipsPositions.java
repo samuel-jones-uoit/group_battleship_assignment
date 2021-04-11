@@ -1,5 +1,6 @@
 package battleship;
 
+import battleship.client.HumanPlayer;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;

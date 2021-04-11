@@ -1,10 +1,10 @@
 package battleship;
 
 public class WaterTile extends BoardTile{
-    private String missSymbol;
-    public WaterTile(String waterSymbol, String missSymbol){
+    private static final String missSymbol = "miss";
+    private static final String waterSymbol = "water";
+    public WaterTile(){
         this.symbol = waterSymbol;
-        this.missSymbol = missSymbol;
     }
 
     // This one is for display only (cannot be hit and doesn't need the symbol)
@@ -13,9 +13,9 @@ public class WaterTile extends BoardTile{
     }
 
     public void hit(){
-        this.symbol = this.missSymbol;
+        this.symbol = missSymbol;
     }
     public boolean isHit(){
-        return this.symbol == this.missSymbol;
+        return this.symbol.equals(missSymbol);
     }
 }

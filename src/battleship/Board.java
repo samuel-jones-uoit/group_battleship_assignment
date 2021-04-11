@@ -1,4 +1,6 @@
-package battleship;
+/*package battleship;
+
+import battleship.client.HumanPlayer;
 
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -31,7 +33,7 @@ public class Board {
         BoardTile[][] board = new BoardTile[n][n];
         for (int r = 0; r < n; r++){
             for (int c = 0; c < n; c++){
-                board[r][c] = new WaterTile(this.waterSymbol, this.missSymbol);
+                board[r][c] = new WaterTile();
             }
         }
         return board;
@@ -138,7 +140,7 @@ public class Board {
             // don't need to check if its been hit because haven't got to that part of the game
             newPart = new ShipPart(ship);
             parts[currIndex - minValue] = newPart;
-            this.board[row][column] = new ShipPartTile(getSymbolID(ship, currIndex - minValue, horizontal), this.hitSymbol, newPart);
+            this.board[row][column] = new ShipPartTile(getSymbolID(ship, currIndex - minValue, horizontal), newPart);
         }
         if(owner instanceof HumanPlayer) {
             ((HumanPlayer) owner).showBoardBeforeGame();
@@ -301,3 +303,5 @@ public class Board {
         return this.boardSize;
     }
 }
+
+ */
