@@ -58,15 +58,14 @@ public class GameHandler implements Runnable{
         }
     }
 
-    public boolean attack(RemotePlayer attacker, Coordinates attackCoordinates) {
+    public void attack(RemotePlayer attacker, Coordinates attackCoordinates) {
         RemotePlayer victim;
         if (attacker.is(player1)){
             victim = player2;
         }else{
             victim = player1;
         }
-        victim.hitSpot(attackCoordinates, attacker);
-        return true;
+        victim.hitSpot(attackCoordinates, attacker);;
     }
 
 }

@@ -52,7 +52,7 @@ public class HumanPlayer extends ClientPlayer {
         boolean success = this.battleShipGame.attack(this, new Coordinates(i,j));
         if (success){
             ableToAttack = false;
-            this.connection.send(new Coordinates(i,j).toString());
+            this.connection.send(new Coordinates(j,i).toString());
         }
     }
 

@@ -25,6 +25,7 @@ public class ClientGame {
     public void mainGame(){
         try{
             this.enemy.createBoard(con.receive());
+            this.me.showBoard();
             Thread t = new Thread(new SafeAwaitMessage(this.con, this));
             t.start();
         }catch (IOException e){

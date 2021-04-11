@@ -90,7 +90,7 @@ public class currMatchBoardPositions {
                 btnsP2[i][j] = new Button();
                 btnsP2[i][j].setMaxSize(32, 32);
                 btnsP2[i][j].setMinSize(32, 32);
-                btnsP2[i][j].setId("waterBlocks");
+                btnsP2[i][j].setId("water");
                 btnsP2[i][j].getStylesheets().addAll(setShipsPositions.class.getResource("style.css").toExternalForm());
             }
         }
@@ -103,7 +103,7 @@ public class currMatchBoardPositions {
                 btnsP1[i][j] = new Button();
                 btnsP1[i][j].setMaxSize(32, 32);
                 btnsP1[i][j].setMinSize(32, 32);
-                btnsP1[i][j].setId("waterBlocks");
+                btnsP1[i][j].setId("water");
                 btnsP1[i][j].getStylesheets().addAll(setShipsPositions.class.getResource("style.css").toExternalForm());
             }
         }

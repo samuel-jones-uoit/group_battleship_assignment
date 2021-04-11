@@ -6,7 +6,10 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
@@ -22,6 +25,7 @@ public class setShipsPositions {
     public static void initDisplayBoard(Stage primaryStage) {
         //Set Ships Position Scene GridPane
         GridPane setShipsGrid = new GridPane();
+        BorderPane setShipsBorder = new BorderPane();
         setShipsGrid.setAlignment(Pos.CENTER);
         setShipsGrid.setHgap(0);
         setShipsGrid.setVgap(0);
@@ -29,25 +33,21 @@ public class setShipsPositions {
         initBtnsArray();
         for(int i = 0; i < btns.length; i++) {
             for (int j = 0; j < btns.length; j++) {
-                setShipsGrid.add(btns[i][j],j+1,i);
+                setShipsGrid.add(btns[i][j],j+1,i+1);
             }
         }
 
         initNumberArray();
         for(int i = 0; i<numbersLabels.length; i++){
-            setShipsGrid.add(numbersLabels[i],i+1,11);
+            setShipsGrid.add(numbersLabels[i],i+1,12);
             numbersLabels[i].setAlignment(Pos.CENTER);
         }
 
         initLetterArray();
         for(int i = 0; i<lettersLabels.length; i++){
-            setShipsGrid.add(lettersLabels[i],0, i);
+            setShipsGrid.add(lettersLabels[i],0, i+1);
             lettersLabels[i].setAlignment(Pos.CENTER);
         }
-
-        Button nextButton = new Button("next");
-        nextButton.setPrefWidth(50);
-        setShipsGrid.add(nextButton, 0, 15);
 
         for (int i = 0; i <= 9;i++) {
             for(int j = 0; j <= 9;j++) {
@@ -61,21 +61,16 @@ public class setShipsPositions {
                 });
             }
         }
-        //playButton For Play Button
-        nextButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                currMatchBoardPositions.initDisplayBoard(primaryStage);
-            }
-        });
 
         //Changing Scene
         instructions = new Label();
-        setShipsGrid.add(instructions,0,16);
-        setShipsScenes = new Scene(setShipsGrid, 800,600);
+        instructions.setAlignment(Pos.CENTER);
+        HBox errors = new HBox(instructions);
+        errors.setAlignment(Pos.CENTER);
+        setShipsBorder.setTop(errors);
+        setShipsBorder.setCenter(setShipsGrid);
+        setShipsScenes = new Scene(setShipsBorder, 800,600);
         primaryStage.setScene(setShipsScenes);
-        System.out.println("Clicked on Play button");
-
     }
 
     private static void initBtnsArray() {
@@ -85,7 +80,7 @@ public class setShipsPositions {
                 btns[i][j] = new Button();
                 btns[i][j].setMaxSize(32, 32);
                 btns[i][j].setMinSize(32, 32);
-                btns[i][j].setId("waterBlocks");
+                btns[i][j].setId("water");
                 btns[i][j].getStylesheets().addAll(setShipsPositions.class.getResource("style.css").toExternalForm());
             }
         }
