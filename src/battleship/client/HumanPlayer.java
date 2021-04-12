@@ -3,6 +3,8 @@ package battleship.client;
 import battleship.*;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 
 public class HumanPlayer extends ClientPlayer {
     private String serverInfo = "";
@@ -13,6 +15,7 @@ public class HumanPlayer extends ClientPlayer {
     }
     private boolean ableToAttack = false;
 
+    private ClientGame getGame(){ return this.battleShipGame; }
     public void notify(String msg){
         setShipsPositions.setInstructions(msg);
     }
@@ -54,39 +57,47 @@ public class HumanPlayer extends ClientPlayer {
             ableToAttack = false;
             this.connection.send(new Coordinates(j,i).toString());
         }
+        EnemyPlayer p = (EnemyPlayer) this.battleShipGame.getOtherPlayer(this);
+        try{
+            System.out.println(this.connection.receive()); // message about whatever hit battleship
+            p.setBoard(this.connection.receive());
+            showBoard();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        Thread t = new Thread(new SafeAwaitMessage(connection, this.getGame()));
+        t.start();
     }
 
     public void showBoardBeforeGame(){
-        BoardTile[][] myboard = this.board.getViewableBoard(this);
+        BoardTile[][] myBoard = this.board.getViewableBoard(this);
         int n = this.board.getBoardSize();
         String[][] myBoardGUI = new String[n][n];
         for (int row = 0 ; row < n; row++){
             for (int column = 0; column < n; column++){
-                myBoardGUI[row][column] = myboard[row][column].getSymbol();
+                myBoardGUI[row][column] = myBoard[row][column].getSymbol();
             }
         }
         setShipsPositions.displayBoard(myBoardGUI);
     }
 
-    public void showBoard(){ showBoardInGame();}
-    public void showBoardInGame(){
-        BoardTile[][] myboard = this.board.getViewableBoard(this);
+    public void showBoard(){
+        BoardTile[][] myBoard = this.board.getViewableBoard(this);
         int n = this.board.getBoardSize();
         String[][] myBoardGUI = new String[n][n];
         for (int row = 0 ; row < n; row++){
             for (int column = 0; column < n; column++){
-                myBoardGUI[row][column] = myboard[row][column].getSymbol();
+                myBoardGUI[row][column] = myBoard[row][column].getSymbol();
             }
         }
 
-        BoardTile[][] theirBoard = this.battleShipGame.getOtherPlayer(this).getViewableBoard(this);
+        BoardTile[][] enemyBoard = this.battleShipGame.getOtherPlayer(this).getViewableBoard(this);
         String[][] enemyBoardGUI = new String[n][n];
         for (int row = 0 ; row < n; row++){
             for (int column = 0; column < n; column++){
-                enemyBoardGUI[row][column] = theirBoard[row][column].getSymbol();
+                enemyBoardGUI[row][column] = enemyBoard[row][column].getSymbol();
             }
         }
-
         currMatchBoardPositions.displayLeftBoard(myBoardGUI);
         currMatchBoardPositions.displayRightBoard(enemyBoardGUI);
     }

@@ -6,7 +6,7 @@ import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class ClientBoard {
-    private final int boardSize = 10;
+    private static final int boardSize = 10;
     private BoardTile[][] board;
     private ClientPlayer owner;
     private Battleship battleShip;
@@ -149,6 +149,7 @@ public class ClientBoard {
     }
 
     public void hitSpot(Coordinates coordinates){
+        System.out.println("Hit at: " + coordinates.getRow() + "," + coordinates.getColumn() + " for " + owner.getName());
         BoardTile b = getTile(coordinates);
         b.hit();
         if (b instanceof WaterTile){
@@ -164,10 +165,6 @@ public class ClientBoard {
         }
 
 
-    }
-
-    public boolean isAlive() {
-        return (battleShip.isAlive() || aircraftCarrier.isAlive() || destroyer.isAlive() || frigate.isAlive() || submarine.isAlive());
     }
 
     public BoardTile getTile(Coordinates coordinates){
@@ -203,7 +200,40 @@ public class ClientBoard {
         return "down";
     }
 
+    private static String[][] fromString(String board){
+        String[][] symbols = new String[boardSize][boardSize];
+        String[] rows = board.split("\\|");
+        for (int row = 0; row < rows.length; row++){
+            //System.out.println(rows[row]);
+            String[] columns = rows[row].split("-");
+            for (int column = 0; column < columns.length; column++){
+                symbols[column][row] = columns[column];
+                //System.out.println("[" + row + "," + column + "]" + "=" + columns[column]);
+            }
+        }
+        return symbols;
+    }
+
     public int getBoardSize(){
-        return this.boardSize;
+        return boardSize;
+    }
+    public void setTile(int row, int column, BoardTile t){
+        this.board[row][column] = t;
+    }
+
+    public static ClientBoard makeBoard(String s, EnemyPlayer owner){
+        String[][] symbols = fromString(s);
+        ClientBoard newBoard = new ClientBoard(owner);
+        for (int row = 0; row < boardSize; row++){
+            for (int column = 0; column < boardSize; column++){
+                if (symbols[row][column].equals("water")){ continue; }
+                if (symbols[row][column].equals("miss")){ newBoard.hitSpot(new Coordinates(row, column)); continue; }
+                ShipPartTile shipPartTile;
+                shipPartTile = new ShipPartTile(symbols[row][column], new ShipPart(new UnknownShip()));
+                shipPartTile.hit();
+                newBoard.setTile(row, column, shipPartTile);
+            }
+        }
+        return newBoard;
     }
 }

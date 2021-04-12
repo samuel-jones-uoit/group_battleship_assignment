@@ -20,25 +20,27 @@ public class GameHandler implements Runnable{
 
     public void run() {
         try{
-            String p2Instructions = player1.createBoard();
-            String p1Instructions = player2.createBoard();
+            player1.createBoard();
+            player2.createBoard();
             player1.notify("ENEMY_BOARD");
             player2.notify("ENEMY_BOARD");
-            player1.notify(p1Instructions);
-            player2.notify(p2Instructions);
+            player1.notify(player2.getBoard().toString(player1));
+            player2.notify(player1.getBoard().toString(player2));
             while (player1.isAlive() && player2.isAlive()){
-                System.out.println("making p1 attack");
                 player1.makeAttack();
-                System.out.println("is p2 alive?");
+                System.out.println(player1.getName());
+                player1.print();
+                System.out.println(player2.getName());
+                player2.print();
                 if (!player2.isAlive()){
-                    System.out.println("no");
                     break;
                 }
-                System.out.println("yes");
-                System.out.println("Making p2 attack");
                 player2.makeAttack();
+                System.out.println(player1.getName());
+                player1.print();
+                System.out.println(player2.getName());
+                player2.print();
             }
-            System.out.println("Exit loop!");
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -66,6 +68,14 @@ public class GameHandler implements Runnable{
             victim = player1;
         }
         victim.hitSpot(attackCoordinates, attacker);;
+    }
+
+    public RemotePlayer getOtherPlayer(RemotePlayer asker){
+        if (asker.is(player1)){
+            return this.player2;
+        }else{
+            return this.player1;
+        }
     }
 
 }

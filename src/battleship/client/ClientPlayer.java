@@ -5,24 +5,25 @@ import battleship.Coordinates;
 import battleship.Player;
 
 public abstract class ClientPlayer extends Player {
-    protected ClientBoard board;
     protected ClientGame battleShipGame;
+    protected ClientBoard board;
     public ClientPlayer(String name) {
         super(name);
     }
 
-    public boolean isAlive() {
-        return this.board.isAlive();
+
+    public void setBattleShipGame(ClientGame c){
+        this.battleShipGame = c;
     }
+
     public BoardTile[][] getViewableBoard(ClientPlayer p){
+        if (this.board == null){
+            System.out.println(this.name);
+        }
         return this.board.getViewableBoard(p);
     }
 
     public void hitSpot(Coordinates attackCoordinates) {
         this.board.hitSpot(attackCoordinates);
-    }
-
-    public void setBattleShipGame(ClientGame c){
-        this.battleShipGame = c;
     }
 }

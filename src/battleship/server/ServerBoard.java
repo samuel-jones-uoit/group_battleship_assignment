@@ -30,7 +30,7 @@ public class ServerBoard {
         return board;
     }
 
-    public BoardTile[][] getViewableBoard(RemotePlayer viewer){
+    private BoardTile[][] getViewableBoard(RemotePlayer viewer){
         boolean fullAccess = viewer.is(this.owner);
         BoardTile[][] viewableBoard = new BoardTile[boardSize][boardSize];
         BoardTile currentTile;
@@ -45,6 +45,18 @@ public class ServerBoard {
             }
         }
         return viewableBoard;
+    }
+
+    public String toString(RemotePlayer viewer){
+        StringBuilder result = new StringBuilder();
+        BoardTile[][] viewableBoard = getViewableBoard(viewer);
+        for (int row = 0; row < boardSize; row++){
+            for (int column = 0; column < boardSize; column++){
+                result.append(viewableBoard[row][column].getSymbol()).append("-");
+            }
+            result.append("|");
+        }
+        return result.toString();
     }
 
     public void setShips(){
@@ -93,23 +105,42 @@ public class ServerBoard {
 
 
     public void hitSpot(Coordinates coordinates, RemotePlayer attacker){
+        System.out.println("Hit at: " + coordinates.getRow() + "," + coordinates.getColumn() + " for " + owner.getName());
         BoardTile b = getTile(coordinates);
         b.hit();
         if (b instanceof WaterTile){
+            attacker.notify("You missed!");
             return;
         }
         ShipPartTile t = (ShipPartTile) b; // hopefully this works
         ShipPart p = t.getShipPart();
         Ship parent = p.getParent();
         if (!parent.isAlive()){
-            attacker.notify("TEXT NOTIFICATION");
             attacker.notify("You hit & sunk " + owner.getName() + "'s " + parent.getName() + "!");
         }else{
-            attacker.notify("TEXT NOTIFICATION");
             attacker.notify("You hit " + owner.getName() + "'s " + parent.getName() + "!");
         }
     }
 
+    public void display(RemotePlayer viewer){
+        BoardTile[][] accessibleBoard = this.getViewableBoard(viewer);
+        StringBuilder line;
+        for (int r = 0; r < boardSize; r++){
+            line = new StringBuilder();
+            line.append(Coordinates.convertRowToChar(r));
+            for (int c = 0; c < boardSize; c++){
+                line.append(" ");
+                line.append(accessibleBoard[r][c].getSymbol());
+            }
+            System.out.println(line);
+        }
+        line = new StringBuilder(" ");
+        for (int c = 0; c < boardSize; c++){
+            line.append(" ");
+            line.append(Coordinates.convertCIndex(c));
+        }
+        System.out.println(line);
+    }
     public boolean isAlive() {
         return (battleShip.isAlive() || aircraftCarrier.isAlive() || destroyer.isAlive() || frigate.isAlive() || submarine.isAlive());
     }

@@ -6,7 +6,6 @@ public class WaterTile extends BoardTile{
     public WaterTile(){
         this.symbol = waterSymbol;
     }
-
     public void hit(){
         this.symbol = missSymbol;
     }

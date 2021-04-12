@@ -1,4 +1,4 @@
-package battleship;
+package battleship.olduseless;
 
 import java.io.IOException;
 import java.net.ServerSocket;

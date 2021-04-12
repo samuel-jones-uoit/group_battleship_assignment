@@ -24,7 +24,7 @@ public class ClientGame {
 
     public void mainGame(){
         try{
-            this.enemy.createBoard(con.receive());
+            this.enemy.setBoard(con.receive());
             this.me.showBoard();
             Thread t = new Thread(new SafeAwaitMessage(this.con, this));
             t.start();
@@ -40,20 +40,19 @@ public class ClientGame {
             victim = enemy;
         }else{
             victim = me;
-
         }
         if (!validateAttack(attackCoordinates, victim.getViewableBoard(victim))){
-            System.out.println("Invalid attack!");
             attacker.notify("Invalid attack!");
             return false;
         }
         victim.hitSpot(attackCoordinates);
+        /*
         if (attacker instanceof HumanPlayer){
             ((HumanPlayer) attacker).showBoard();
         }else{
             assert victim instanceof HumanPlayer;
             ((HumanPlayer) victim).showBoard();
-        }
+        }*/
         return true;
     }
 
@@ -72,14 +71,12 @@ public class ClientGame {
 
     public void nextMove(){
         this.me.makeAttack();
-        Thread t = new Thread(new SafeAwaitMessage(this.con, this));
-        t.start();
     }
 
     public void getAttacked() {
         try{
-            System.out.println("Waiting for coordinates");
             this.enemy.makeAttack(Coordinates.fromString(this.con.receive()));
+            this.me.showBoard();
             Thread t = new Thread(new SafeAwaitMessage(this.con, this));
             t.start();
         }catch (IOException e){

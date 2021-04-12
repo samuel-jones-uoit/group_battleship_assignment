@@ -15,7 +15,7 @@ public class RemotePlayer extends Player{
         this.game = game;
     }
 
-    public String createBoard() throws IOException {
+    public void createBoard() throws IOException {
         this.board = new ServerBoard(this);
         assert this.connection != null;
         String instructions = this.connection.receive();
@@ -27,7 +27,6 @@ public class RemotePlayer extends Player{
             this.board.placeShip(shipsToPlace[i], coords[0], coords[1]);
             i++;
         }
-        return instructions;
     }
 
     private Coordinates[] decipherTwo(String twoCoordinates){
@@ -47,6 +46,7 @@ public class RemotePlayer extends Player{
         this.connection.send("YOUR_MOVE");
         Coordinates c = Coordinates.fromString(this.connection.receive());
         this.game.attack(this, c);
+        this.notify(this.game.getOtherPlayer(this).getBoard().toString(this));
     }
 
     public void hitSpot(Coordinates attackCoordinates, RemotePlayer attacker){
@@ -56,8 +56,10 @@ public class RemotePlayer extends Player{
         this.board.hitSpot(attackCoordinates, attacker);
     }
 
+    public ServerBoard getBoard(){ return this.board; }
 
     public boolean isAlive(){
         return this.board.isAlive();
     }
+    public void print(){ this.board.display(this); }
 }
