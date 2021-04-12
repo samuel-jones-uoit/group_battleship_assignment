@@ -23,8 +23,6 @@ public class SafeAwaitMessage implements Runnable{
                 game.getAttacked();
             }else if (message.equals("GAME_OVER")){
                 game.gameOver();
-            }else if (message.equals("TEXT NOTIFICATION")){
-                game.textNotification();
             }
             Thread.currentThread().join();
         }catch (Exception e){
