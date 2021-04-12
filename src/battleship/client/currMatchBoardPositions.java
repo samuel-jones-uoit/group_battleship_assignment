@@ -52,7 +52,7 @@ public class currMatchBoardPositions {
         initBtnsArray();
         for(int i = 0; i < btnsP2.length; i++) {
             for (int j = 0; j < btnsP2.length; j++) {
-                currMatchBoardGrid.add(btnsP2[i][j],i+15,j);
+                currMatchBoardGrid.add(btnsP2[i][j],j+15,i);
                 final int finalI = i;
                 final int finalJ = j;
                 btnsP2[i][j].setOnAction(new EventHandler<ActionEvent>() {

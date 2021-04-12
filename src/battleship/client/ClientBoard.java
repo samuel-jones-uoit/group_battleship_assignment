@@ -207,7 +207,7 @@ public class ClientBoard {
             //System.out.println(rows[row]);
             String[] columns = rows[row].split("-");
             for (int column = 0; column < columns.length; column++){
-                symbols[column][row] = columns[column];
+                symbols[row][column] = columns[column];
                 //System.out.println("[" + row + "," + column + "]" + "=" + columns[column]);
             }
         }
