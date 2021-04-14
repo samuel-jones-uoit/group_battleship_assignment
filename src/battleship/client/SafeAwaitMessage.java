@@ -14,7 +14,7 @@ public class SafeAwaitMessage implements Runnable{
     public void run() {
         try{
             String message = connection.receive();
-            System.out.println("RECEIVED: " + message);
+            //System.out.println("RECEIVED: " + message);
             if (message.equals("ENEMY_BOARD")){
                 game.mainGame();
             }else if (message.equals("YOUR_MOVE")){

@@ -87,7 +87,9 @@ public class ClientGame {
     public void gameOver() {
         try{
             String winMessage = this.con.receive();
-            new Alert (Alert.AlertType.INFORMATION, winMessage).showAndWait();
+            System.out.println(winMessage);
+            con.close();
+            System.exit(0);
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -101,6 +103,5 @@ public class ClientGame {
         }
         Thread t = new Thread(new SafeAwaitMessage(this.con, this));
         t.start();
-        // TODO: Display in text thing
     }
 }

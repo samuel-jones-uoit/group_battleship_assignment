@@ -149,7 +149,7 @@ public class ClientBoard {
     }
 
     public void hitSpot(Coordinates coordinates){
-        System.out.println("Hit at: " + coordinates.getRow() + "," + coordinates.getColumn() + " for " + owner.getName());
+        //System.out.println("Hit at: " + coordinates.getRow() + "," + coordinates.getColumn() + " for " + owner.getName());
         BoardTile b = getTile(coordinates);
         b.hit();
         if (b instanceof WaterTile){

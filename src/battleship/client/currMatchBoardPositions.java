@@ -1,6 +1,5 @@
 package battleship.client;
 
-import battleship.client.HumanPlayer;
 import battleship.setShipsPositions;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

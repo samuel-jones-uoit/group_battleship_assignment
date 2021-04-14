@@ -62,4 +62,11 @@ public class RemotePlayer extends Player{
         return this.board.isAlive();
     }
     public void print(){ this.board.display(this); }
+    public void closeConnection(){
+        try{
+            this.connection.close();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
 }

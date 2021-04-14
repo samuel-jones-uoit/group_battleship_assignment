@@ -28,18 +28,10 @@ public class GameHandler implements Runnable{
             player2.notify(player1.getBoard().toString(player2));
             while (player1.isAlive() && player2.isAlive()){
                 player1.makeAttack();
-                System.out.println(player1.getName());
-                player1.print();
-                System.out.println(player2.getName());
-                player2.print();
                 if (!player2.isAlive()){
                     break;
                 }
                 player2.makeAttack();
-                System.out.println(player1.getName());
-                player1.print();
-                System.out.println(player2.getName());
-                player2.print();
             }
         }catch (IOException e){
             e.printStackTrace();
@@ -51,12 +43,14 @@ public class GameHandler implements Runnable{
             player2.notify("GAME_OVER");
             player1.notify(player1.getName() + " won!");
             player2.notify(player1.getName() + " won!");
+            shutDown();
         }else{
             System.out.println(player2.getName() + " won!");
             player1.notify("GAME_OVER");
             player2.notify("GAME_OVER");
             player1.notify(player2.getName() + " won!");
             player2.notify(player2.getName() + " won!");
+            shutDown();
         }
     }
 
@@ -75,6 +69,16 @@ public class GameHandler implements Runnable{
             return this.player2;
         }else{
             return this.player1;
+        }
+    }
+
+    private void shutDown(){
+        try{
+            player1.closeConnection();
+            player2.closeConnection();
+            Thread.currentThread().join();
+        }catch (InterruptedException e){
+            e.printStackTrace();
         }
     }
 

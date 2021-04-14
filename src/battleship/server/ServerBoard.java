@@ -105,7 +105,6 @@ public class ServerBoard {
 
 
     public void hitSpot(Coordinates coordinates, RemotePlayer attacker){
-        System.out.println("Hit at: " + coordinates.getRow() + "," + coordinates.getColumn() + " for " + owner.getName());
         BoardTile b = getTile(coordinates);
         b.hit();
         if (b instanceof WaterTile){

@@ -10,4 +10,5 @@ public abstract class Player {
         return p.getName().equals(this.getName());
     }
     public abstract void notify(String msg);
+
 }
