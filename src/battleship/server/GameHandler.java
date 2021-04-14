@@ -29,6 +29,7 @@ public class GameHandler implements Runnable{
             while (player1.isAlive() && player2.isAlive()){
                 player1.makeAttack();
                 if (!player2.isAlive()){
+                    System.out.println("player 2 is dead");
                     break;
                 }
                 player2.makeAttack();
@@ -44,12 +45,18 @@ public class GameHandler implements Runnable{
             player1.notify(player1.getName() + " won!");
             player2.notify(player1.getName() + " won!");
             shutDown();
-        }else{
+        }else if (player2.isAlive()){
             System.out.println(player2.getName() + " won!");
             player1.notify("GAME_OVER");
             player2.notify("GAME_OVER");
             player1.notify(player2.getName() + " won!");
             player2.notify(player2.getName() + " won!");
+            shutDown();
+        }else{
+            player1.notify("GAME_OVER");
+            player2.notify("GAME_OVER");
+            player1.notify("Error D:");
+            player2.notify("Error D:");
             shutDown();
         }
     }
@@ -73,13 +80,9 @@ public class GameHandler implements Runnable{
     }
 
     private void shutDown(){
-        try{
-            player1.closeConnection();
-            player2.closeConnection();
-            Thread.currentThread().join();
-        }catch (InterruptedException e){
-            e.printStackTrace();
-        }
+        player1.closeConnection();
+        player2.closeConnection();
+        Thread.currentThread().interrupt();
     }
 
 }

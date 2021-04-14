@@ -52,19 +52,10 @@ public class Client extends Application {
         primaryStage.show();
     }
     private static void playGame(){
-        try{
-            ClientJoiner joiner = new ClientJoiner("localhost", 16789);
-            JoinInfo joinInfo = joiner.join("Player1");
-            Connection connection = joinInfo.getConnection();
-            PlayerSet players = joinInfo.getPlayers();
-            System.out.println("Welcome To Battleship!");
-            ClientGame localGame = new ClientGame(connection, players);
-            localGame.start();
-        }catch (IOException | RejectedJoinException e){
-            e.printStackTrace();
-        }
+        ClientGame localGame = new ClientGame("Player 1");
+        Thread game = new Thread(localGame);
+        game.start();
     }
-
 
     public static void main(String[] args) {
         launch(args);

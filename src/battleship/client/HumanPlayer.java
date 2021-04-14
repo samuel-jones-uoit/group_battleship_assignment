@@ -1,6 +1,7 @@
 package battleship.client;
 
 import battleship.*;
+import javafx.application.Platform;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -11,19 +12,27 @@ public class HumanPlayer extends ClientPlayer {
     private Connection connection;
     public HumanPlayer(String name){
         super(name);
-        currMatchBoardPositions.setPlayer1(this);
+        HumanPlayer p = this;
+        currMatchBoardPositions.setPlayer1(p);
     }
     private boolean ableToAttack = false;
 
     private ClientGame getGame(){ return this.battleShipGame; }
     public void notify(String msg){
-        setShipsPositions.setInstructions(msg);
+        System.out.println(msg);
     }
 
     public void createBoard(){
         this.board = new ClientBoard(this);
-        setShipsPositions.setInstructions("Please click where you would like to place the front of you ship");
-        setShipsPositions.setPlayer(this);
+        HumanPlayer p = this;
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                setShipsPositions.setInstructions("Please click where you would like to place the front of you ship");
+                setShipsPositions.setPlayer(p);
+                Thread.currentThread().interrupt();
+            }
+        });
     }
 
     public void placeShip(Coordinates start, Coordinates end, Stage primaryStage){
@@ -37,10 +46,19 @@ public class HumanPlayer extends ClientPlayer {
             }
         }
         if(board.allShipsPlaced()){
-            setShipsPositions.changeScene(primaryStage);
+            System.out.println("Here");
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    System.out.println("In runnable");
+                    setShipsPositions.changeScene(primaryStage);
+                    Thread.currentThread().interrupt();
+                }
+            });
+            System.out.println("Sending stuff!!!");
+            System.out.println(Thread.currentThread().getName());
             this.connection.send(serverInfo);
-            Thread t = new Thread(new SafeAwaitMessage(this.connection, this.battleShipGame));
-            t.start();
+            this.battleShipGame.waitNextMessage();
         }
     }
 
@@ -65,8 +83,7 @@ public class HumanPlayer extends ClientPlayer {
         }catch (IOException e){
             e.printStackTrace();
         }
-        Thread t = new Thread(new SafeAwaitMessage(connection, this.getGame()));
-        t.start();
+        battleShipGame.waitNextMessage();
     }
 
     public void showBoardBeforeGame(){
@@ -78,7 +95,13 @@ public class HumanPlayer extends ClientPlayer {
                 myBoardGUI[row][column] = myBoard[row][column].getSymbol();
             }
         }
-        setShipsPositions.displayBoard(myBoardGUI);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                setShipsPositions.displayBoard(myBoardGUI);
+                Thread.currentThread().interrupt();
+            }
+        });
     }
 
     public void showBoard(){
@@ -98,8 +121,15 @@ public class HumanPlayer extends ClientPlayer {
                 enemyBoardGUI[row][column] = enemyBoard[row][column].getSymbol();
             }
         }
-        currMatchBoardPositions.displayLeftBoard(myBoardGUI);
-        currMatchBoardPositions.displayRightBoard(enemyBoardGUI);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                currMatchBoardPositions.displayLeftBoard(myBoardGUI);
+                currMatchBoardPositions.displayRightBoard(enemyBoardGUI);
+                Thread.currentThread().interrupt();
+            }
+        });
+
     }
 
     public void setConnection(Connection c){

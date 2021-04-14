@@ -80,7 +80,14 @@ public class currMatchBoardPositions {
     }
 
     private static void buttonPressed(int finalI, int finalJ, Stage primaryStage) {
-        player1.GUIAttack(finalI, finalJ);
+        Thread newGameThreadidgaf = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                player1.GUIAttack(finalI, finalJ);
+                Thread.currentThread().interrupt();
+            }
+        });
+        newGameThreadidgaf.start();
     }
 
     private static void initBtnsArray() {

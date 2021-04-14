@@ -35,7 +35,7 @@ public class ClientBoard {
 
     public BoardTile[][] getViewableBoard(Player viewer){
         boolean fullAccess = viewer.is(this.owner);
-        BoardTile[][] viewableBoard = new BoardTile[this.boardSize][this.boardSize];
+        BoardTile[][] viewableBoard = new BoardTile[boardSize][boardSize];
         BoardTile currentTile;
         for (int r = 0; r < boardSize; r++){
             for (int c = 0; c < boardSize; c++){
@@ -226,12 +226,18 @@ public class ClientBoard {
         ClientBoard newBoard = new ClientBoard(owner);
         for (int row = 0; row < boardSize; row++){
             for (int column = 0; column < boardSize; column++){
-                if (symbols[row][column].equals("water")){ continue; }
-                if (symbols[row][column].equals("miss")){ newBoard.hitSpot(new Coordinates(row, column)); continue; }
-                ShipPartTile shipPartTile;
-                shipPartTile = new ShipPartTile(symbols[row][column], new ShipPart(new UnknownShip()));
-                shipPartTile.hit();
-                newBoard.setTile(row, column, shipPartTile);
+                try{
+                    if (symbols[row][column].equals("water")){ continue; }
+                    if (symbols[row][column].equals("miss")){ newBoard.hitSpot(new Coordinates(row, column)); continue; }
+                    ShipPartTile shipPartTile;
+                    shipPartTile = new ShipPartTile(symbols[row][column], new ShipPart(new UnknownShip()));
+                    shipPartTile.hit();
+                    newBoard.setTile(row, column, shipPartTile);
+                }catch (NullPointerException e){
+                    System.err.println(row);
+                    System.err.println(column);
+                    System.exit(1);
+                }
             }
         }
         return newBoard;

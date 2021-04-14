@@ -119,7 +119,16 @@ public class setShipsPositions {
             return;
         }
         Coordinates current = new Coordinates(i,j);
-        player1.placeShip(previous, current, primaryStage);
+        Coordinates tempPrevious = previous;
+        Stage tempPrimaryStage = primaryStage;
+        Thread nextThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                player1.placeShip(tempPrevious, current, tempPrimaryStage);
+                Thread.currentThread().interrupt();
+            }
+        });
+        nextThread.start();
         previous = null;
     }
 

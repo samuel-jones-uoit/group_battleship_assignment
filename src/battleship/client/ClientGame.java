@@ -1,23 +1,36 @@
 package battleship.client;
 
 import battleship.*;
-import javafx.scene.control.Alert;
 
 import java.io.IOException;
 
-public class ClientGame {
-    private final Connection con;
-    private final HumanPlayer me;
-    private final EnemyPlayer enemy;
-    public ClientGame(Connection connection, PlayerSet players) {
-        this.con = connection;
-        this.me = (HumanPlayer) players.getPlayer1();
-        this.enemy = (EnemyPlayer) players.getPlayer2();
-        this.me.setConnection(connection);
-        this.me.setBattleShipGame(this);
-        this.enemy.setBattleShipGame(this);
-    }
+public class ClientGame implements Runnable{
+    private Connection con;
+    private HumanPlayer me;
+    private EnemyPlayer enemy;
+    private final String name;
 
+    public ClientGame(String name){
+        this.name = name;
+    }
+    public void run(){
+        try{
+            ClientJoiner joiner = new ClientJoiner("localhost", 16789);
+            JoinInfo joinInfo = joiner.join(this.name);
+            Connection connection = joinInfo.getConnection();
+            PlayerSet players = joinInfo.getPlayers();
+            this.con = connection;
+            this.me = (HumanPlayer) players.getPlayer1();
+            this.enemy = (EnemyPlayer) players.getPlayer2();
+            this.me.setConnection(connection);
+            this.me.setBattleShipGame(this);
+            this.enemy.setBattleShipGame(this);
+            System.out.println("Welcome To Battleship!");
+            this.start();
+        }catch (IOException | RejectedJoinException e){
+            e.printStackTrace();
+        }
+    }
     public void start(){
         this.me.createBoard();
     }
@@ -26,8 +39,7 @@ public class ClientGame {
         try{
             this.enemy.setBoard(con.receive());
             this.me.showBoard();
-            Thread t = new Thread(new SafeAwaitMessage(this.con, this));
-            t.start();
+            waitNextMessage();
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -46,13 +58,6 @@ public class ClientGame {
             return false;
         }
         victim.hitSpot(attackCoordinates);
-        /*
-        if (attacker instanceof HumanPlayer){
-            ((HumanPlayer) attacker).showBoard();
-        }else{
-            assert victim instanceof HumanPlayer;
-            ((HumanPlayer) victim).showBoard();
-        }*/
         return true;
     }
 
@@ -77,8 +82,7 @@ public class ClientGame {
         try{
             this.enemy.makeAttack(Coordinates.fromString(this.con.receive()));
             this.me.showBoard();
-            Thread t = new Thread(new SafeAwaitMessage(this.con, this));
-            t.start();
+            waitNextMessage();
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -101,7 +105,24 @@ public class ClientGame {
         }catch (Exception e){
             e.printStackTrace();
         }
-        Thread t = new Thread(new SafeAwaitMessage(this.con, this));
-        t.start();
+        waitNextMessage();
+    }
+
+    public void waitNextMessage(){
+        try{
+            String message = con.receive();
+            System.out.println("RECEIVED: " + message);
+            if (message.equals("ENEMY_BOARD")){
+                mainGame();
+            }else if (message.equals("YOUR_MOVE")){
+                nextMove();
+            }else if (message.equals("ATTACK_ON_YOU")){
+                getAttacked();
+            }else if (message.equals("GAME_OVER")){
+                gameOver();
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 }
