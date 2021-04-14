@@ -1,6 +1,7 @@
 package battleship;
 
 import battleship.client.HumanPlayer;
+import battleship.client.PlaceShipInfo;
 import battleship.client.currMatchBoardPositions;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -119,16 +120,10 @@ public class setShipsPositions {
             return;
         }
         Coordinates current = new Coordinates(i,j);
+        // TODO: maybe get rid of these 2 temp variables
         Coordinates tempPrevious = previous;
         Stage tempPrimaryStage = primaryStage;
-        Thread nextThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                player1.placeShip(tempPrevious, current, tempPrimaryStage);
-                Thread.currentThread().interrupt();
-            }
-        });
-        nextThread.start();
+        player1.addToDo(new PlaceShipInfo(tempPrevious, current, tempPrimaryStage));
         previous = null;
     }
 

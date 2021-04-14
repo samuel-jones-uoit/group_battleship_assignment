@@ -1,10 +1,10 @@
 package messagebox;
 
-public abstract class ChatBox {
+public abstract class MessageBox {
     protected int maxMessages;
     protected String[] messages;
     protected int messageCount;
-    public ChatBox(int maxMessages){
+    public MessageBox(int maxMessages){
         this.maxMessages = maxMessages;
         this.messages = new String[maxMessages];
         this.messageCount = 0;
@@ -18,7 +18,7 @@ public abstract class ChatBox {
             this.messages[i] = this.messages[i + 1];
         }
     }
-    public abstract void addMessage(String username, String msg);
+    public abstract void addMessage(String msg);
 
     protected void incMessageCount(){
         if (this.messageCount < this.maxMessages){

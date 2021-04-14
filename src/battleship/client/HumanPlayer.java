@@ -5,21 +5,28 @@ import javafx.application.Platform;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-
+import java.util.concurrent.LinkedBlockingQueue;
 
 public class HumanPlayer extends ClientPlayer {
     private String serverInfo = "";
     private Connection connection;
+    private LinkedBlockingQueue<CustomInfo> stuffToDo;
+    private boolean ableToAttack = false;
     public HumanPlayer(String name){
         super(name);
+        stuffToDo = new LinkedBlockingQueue<>();
         HumanPlayer p = this;
         currMatchBoardPositions.setPlayer1(p);
     }
-    private boolean ableToAttack = false;
 
     private ClientGame getGame(){ return this.battleShipGame; }
     public void notify(String msg){
-        System.out.println(msg);
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                currMatchBoardPositions.addMessage(msg);
+            }
+        });
     }
 
     public void createBoard(){
@@ -28,11 +35,20 @@ public class HumanPlayer extends ClientPlayer {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                setShipsPositions.setInstructions("Please click where you would like to place the front of you ship");
+                setShipsPositions.setInstructions("Please click where you would like to place the front of your ship");
                 setShipsPositions.setPlayer(p);
                 Thread.currentThread().interrupt();
             }
         });
+        PlaceShipInfo placeShipInfo;
+        try{
+            while (!board.outOfShips()){
+                placeShipInfo = (PlaceShipInfo) stuffToDo.take();
+                placeShip(placeShipInfo.getPrev(), placeShipInfo.getNext(), placeShipInfo.getStage());
+            }
+        }catch (InterruptedException e){
+            e.printStackTrace();
+        }
     }
 
     public void placeShip(Coordinates start, Coordinates end, Stage primaryStage){
@@ -65,25 +81,31 @@ public class HumanPlayer extends ClientPlayer {
     public void makeAttack(){
         notify("Click a spot on your opponent's board");
         ableToAttack = true;
-    }
-    public void GUIAttack(int i, int j){
-        if (!ableToAttack){
-            return;
-        }
-        boolean success = this.battleShipGame.attack(this, new Coordinates(i,j));
-        if (success){
-            ableToAttack = false;
-            this.connection.send(new Coordinates(i,j).toString());
-        }
-        EnemyPlayer p = (EnemyPlayer) this.battleShipGame.getOtherPlayer(this);
         try{
-            System.out.println(this.connection.receive()); // message about whatever hit battleship
-            p.setBoard(this.connection.receive());
-            showBoard();
-        }catch (IOException e){
+            // handles failed attacks
+            while(ableToAttack){
+                AttackInfo a = (AttackInfo) this.stuffToDo.take();
+                GUIAttack(a.getCoordinates());
+            }
+        }catch (InterruptedException e){
             e.printStackTrace();
         }
-        battleShipGame.waitNextMessage();
+    }
+    public void GUIAttack(Coordinates c){
+        boolean success = this.battleShipGame.attack(this, c);
+        if (success){
+            ableToAttack = false;
+            this.connection.send(c.toString());
+            EnemyPlayer p = (EnemyPlayer) this.battleShipGame.getOtherPlayer(this);
+            try{
+                System.out.println(this.connection.receive()); // message about whatever hit battleship
+                p.setBoard(this.connection.receive());
+                showBoard();
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+            battleShipGame.waitNextMessage();
+        }
     }
 
     public void showBoardBeforeGame(){
@@ -134,6 +156,12 @@ public class HumanPlayer extends ClientPlayer {
 
     public void setConnection(Connection c){
         this.connection = c;
+    }
+
+    public void addToDo(CustomInfo c){
+        if (stuffToDo.isEmpty()){
+            stuffToDo.add(c);
+        }
     }
 
 }

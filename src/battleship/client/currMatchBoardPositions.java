@@ -1,28 +1,40 @@
 package battleship.client;
 
+import battleship.Coordinates;
 import battleship.setShipsPositions;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
+import messagebox.ClientMessageBox;
+import messagebox.MessageBox;
+import messagebox.MessageUI;
 
 public class currMatchBoardPositions {
-    private static Scene currMatchBoard;
+    private static Scene currGameScene;
     public static Button[][] btnsP1 = new Button[10][10];
     public static Button[][] btnsP2 = new Button[10][10];
     private static Label[] numbersLabels = new Label[10];
     private static Label[] lettersLabels = new Label[10];
     private static HumanPlayer player1;
+    private static ClientMessageBox msgBox;
+    private static MessageUI msgUI;
 
     public static void setPlayer1(HumanPlayer p1){
         player1 = p1;
     }
     public static void initDisplayBoard(Stage primaryStage) {
         //Set Ships Position Scene GridPane
+        BorderPane borderPane = new BorderPane();
+
+        msgBox = new ClientMessageBox(10);
+        msgUI = new MessageUI(450,250, msgBox);
+        msgBox.setParentUI(msgUI);
         GridPane currMatchBoardGrid = new GridPane();
         currMatchBoardGrid.setAlignment(Pos.CENTER);
         currMatchBoardGrid.setHgap(0);
@@ -74,20 +86,15 @@ public class currMatchBoardPositions {
         }
 
         //Changing Scene
-        currMatchBoard = new Scene(currMatchBoardGrid, 800,600);
-        primaryStage.setScene(currMatchBoard);
+        borderPane.setCenter(currMatchBoardGrid);
+        borderPane.setTop(msgUI.setup());
+        currGameScene = new Scene(borderPane, 800,600);
+        primaryStage.setScene(currGameScene);
         System.out.println("Clicked on Play button");
     }
 
     private static void buttonPressed(int finalI, int finalJ, Stage primaryStage) {
-        Thread newGameThreadidgaf = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                player1.GUIAttack(finalI, finalJ);
-                Thread.currentThread().interrupt();
-            }
-        });
-        newGameThreadidgaf.start();
+        player1.addToDo(new AttackInfo(new Coordinates(finalI, finalJ)));
     }
 
     private static void initBtnsArray() {
@@ -150,5 +157,9 @@ public class currMatchBoardPositions {
                 buttons[i][j].setId(symbols[i][j]);
             }
         }
+    }
+
+    public static void addMessage(String msg){
+        msgBox.addMessage(msg);
     }
 }

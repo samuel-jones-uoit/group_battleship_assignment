@@ -242,4 +242,6 @@ public class ClientBoard {
         }
         return newBoard;
     }
+
+    public boolean outOfShips(){ return shipsToPlace.isEmpty(); }
 }
