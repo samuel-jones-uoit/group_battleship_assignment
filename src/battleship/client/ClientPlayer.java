@@ -16,6 +16,8 @@ public abstract class ClientPlayer extends Player {
         this.battleShipGame = c;
     }
 
+    public void notify(String msg, String type){}
+
     public BoardTile[][] getViewableBoard(ClientPlayer p){
         if (this.board == null){
             System.out.println(this.name);

@@ -7,6 +7,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
@@ -44,12 +45,21 @@ public class Client extends Application {
 
         });
 
-        mainGrid.add(playButton,0,0);
-        mainGrid.add(helpButton,0,1);
-        mainGrid.add(leaderBoardButton,0,2);
+
+        mainGrid.add(playButton,0,1);
         mainScene = new Scene(mainGrid, 800,600);
         primaryStage.setScene(mainScene);
         primaryStage.show();
+
+        //playButton For Play Button
+        playButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                setShipsPositions.initDisplayBoard(primaryStage);
+                playGame();
+            }
+        });
+
     }
     private static void playGame(){
         ClientGame localGame = new ClientGame("Player 1");

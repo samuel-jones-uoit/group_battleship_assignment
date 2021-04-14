@@ -29,4 +29,5 @@ public class ClientJoiner {
         PlayerSet players = new PlayerSet(me, enemy);
         return new JoinInfo(players, joinConnection);
     }
+
 }

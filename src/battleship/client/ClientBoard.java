@@ -65,19 +65,20 @@ public class ClientBoard {
 
     public boolean placeShip(Ship ship, Coordinates end1, Coordinates end2){
         if (end1.getRow() != end2.getRow() && end1.getColumn() != end2.getColumn()){
-            owner.notify("Invalid Selection!");
+            owner.notify("Invalid Selection!", "beforeGame");
             return false;
         }
         // One of these two values is 0 the other is the length of the desired ship placement (this works vertical or horizontal)
         int length = Math.abs(end1.getRow() - end2.getRow()) + Math.abs(end1.getColumn() - end2.getColumn()) + 1;
         if (length != ship.getSize()){
-            owner.notify("Invalid Selection: invalid length");
+            owner.notify("Invalid Selection: invalid length", "beforeGame");
             return false;
         }
         if (!(freeSpace(end1, end2))){
-            owner.notify("Invalid Selection: Space occupied");
+            owner.notify("Invalid Selection: Space occupied", "beforeGame");
             return false;
         }
+        owner.notify("Next Ship", "beforeGame");
         confirmPlaceShip(ship, end1, end2);
         return true;
     }

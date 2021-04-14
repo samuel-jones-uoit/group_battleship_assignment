@@ -1,8 +1,11 @@
 package battleship.client;
 
 import battleship.*;
+import javafx.application.Platform;
+import javafx.scene.control.Alert;
 
 import java.io.IOException;
+import java.util.concurrent.RunnableFuture;
 
 public class ClientGame implements Runnable{
     private Connection con;
@@ -31,6 +34,8 @@ public class ClientGame implements Runnable{
             e.printStackTrace();
         }
     }
+
+
     public void start(){
         this.me.createBoard();
     }
@@ -91,9 +96,18 @@ public class ClientGame implements Runnable{
     public void gameOver() {
         try{
             String winMessage = this.con.receive();
+            Platform.runLater(new Runnable() {
+                @Override public void run() {
+                    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                    alert.setTitle("Information Dialog");
+                    alert.setHeaderText(null);
+                    alert.setContentText(winMessage);
+                    alert.showAndWait();
+                    System.exit(0);
+                }
+            });
             System.out.println(winMessage);
             con.close();
-            System.exit(0);
         }catch (IOException e){
             e.printStackTrace();
         }

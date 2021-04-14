@@ -20,6 +20,18 @@ public class HumanPlayer extends ClientPlayer {
     }
 
     private ClientGame getGame(){ return this.battleShipGame; }
+
+    public void notify(String msg, String type){
+        if (type.equals("beforeGame")) {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    setShipsPositions.setInstructions(msg);
+                }
+            });
+        }
+    }
+
     public void notify(String msg){
         Platform.runLater(new Runnable() {
             @Override

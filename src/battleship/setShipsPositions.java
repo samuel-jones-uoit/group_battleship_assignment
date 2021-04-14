@@ -64,7 +64,7 @@ public class setShipsPositions {
         }
 
         //Changing Scene
-        instructions = new Label();
+        instructions = new Label("Waiting For Players");
         instructions.setAlignment(Pos.CENTER);
         HBox errors = new HBox(instructions);
         errors.setAlignment(Pos.CENTER);
