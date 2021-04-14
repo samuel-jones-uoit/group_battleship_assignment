@@ -21,6 +21,7 @@ public class Client extends Application {
     public void start(Stage primaryStage) {
         primaryStage.setTitle("BattleShip");
 
+
         //Main Menu Scene GridPane
         GridPane mainGrid = new GridPane();
         mainGrid.setAlignment(Pos.CENTER);

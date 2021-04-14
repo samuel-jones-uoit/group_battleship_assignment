@@ -78,6 +78,7 @@ public class ClientBoard {
             owner.notify("Invalid Selection: Space occupied", "beforeGame");
             return false;
         }
+
         owner.notify("Next Ship", "beforeGame");
         confirmPlaceShip(ship, end1, end2);
         return true;

@@ -47,7 +47,6 @@ public class HumanPlayer extends ClientPlayer {
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
-                setShipsPositions.setInstructions("Please click where you would like to place the front of your ship");
                 setShipsPositions.setPlayer(p);
                 Thread.currentThread().interrupt();
             }
@@ -55,6 +54,10 @@ public class HumanPlayer extends ClientPlayer {
         PlaceShipInfo placeShipInfo;
         try{
             while (!board.outOfShips()){
+                Ship ship = board.getNextShip();
+                Integer size = ship.getSize();
+                String name = ship.getName();
+                this.notify("place your "+name+" it is "+size.toString()+" units long","beforeGame");
                 placeShipInfo = (PlaceShipInfo) stuffToDo.take();
                 placeShip(placeShipInfo.getPrev(), placeShipInfo.getNext(), placeShipInfo.getStage());
             }
