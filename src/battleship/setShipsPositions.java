@@ -5,6 +5,7 @@ import battleship.client.PlaceShipInfo;
 import battleship.client.currMatchBoardPositions;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -20,6 +21,7 @@ public class setShipsPositions {
     private static Label[] numbersLabels = new Label[10];
     private static Label[] lettersLabels = new Label[10];
     private static Label instructions;
+    private static Label errorField;
     private static HumanPlayer player1;
     private static Coordinates previous =null;
 
@@ -67,8 +69,18 @@ public class setShipsPositions {
         instructions = new Label("Waiting For Players");
         instructions.setAlignment(Pos.CENTER);
         HBox errors = new HBox(instructions);
+
+        errorField = new Label();
+        HBox placementErrors = new HBox(errorField);
         errors.setAlignment(Pos.CENTER);
-        setShipsBorder.setTop(errors);
+        GridPane errorGrid = new GridPane();
+        errorGrid.add(errors,0,0);
+        errorGrid.add(errorField,0,1);
+        errorGrid.setAlignment(Pos.CENTER);
+        setShipsBorder.setTop(errorGrid);
+
+
+
         setShipsBorder.setCenter(setShipsGrid);
         setShipsScenes = new Scene(setShipsBorder, 800,600);
         primaryStage.setScene(setShipsScenes);
@@ -108,6 +120,9 @@ public class setShipsPositions {
 
     public static void setInstructions(String message){
         instructions.setText(message);
+    }
+    public static void setError(String message){
+        errorField.setText(message);
     }
 
     public static void setPlayer (HumanPlayer player){

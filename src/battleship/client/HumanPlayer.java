@@ -32,6 +32,17 @@ public class HumanPlayer extends ClientPlayer {
         }
     }
 
+    public void notifyError(String msg, String type){
+        if (type.equals("beforeGame")) {
+            Platform.runLater(new Runnable() {
+                @Override
+                public void run() {
+                    setShipsPositions.setError(msg);
+                }
+            });
+        }
+    }
+
     public void notify(String msg){
         Platform.runLater(new Runnable() {
             @Override

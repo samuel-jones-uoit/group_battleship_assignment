@@ -17,6 +17,7 @@ public abstract class ClientPlayer extends Player {
     }
 
     public void notify(String msg, String type){}
+    public void notifyError(String msg, String type){}
 
     public BoardTile[][] getViewableBoard(ClientPlayer p){
         if (this.board == null){
