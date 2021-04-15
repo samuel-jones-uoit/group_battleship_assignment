@@ -1,4 +1,4 @@
-# Final group assignment for csci2020u - Multiplayer BattleShip Game
+# Final Group Assignment For Csci2020u - Multiplayer BattleShip Game
 
 **Collaborators:
 Samuel Jones, Abdulwasay Mansoor And Nicholas Coles**
@@ -24,9 +24,10 @@ To Run On Separate Machine:
 
 To Play:
 1. Press "play" on both of the clients
-2. Place your ships following the prompts
-3. Click the other player's board and try to hit their ship
-4. Have Fun!!
+2. Place your ships by clicking the buttons representing the front and back of the ship, follow the prompts.
+3. After settings your ships, the next scene will have 2 boards, the left one representing your ships and the right one representing the enemy ships, which will be empty
+4. Try to destroy all enemy ships by guessing where the enemy ship is located
+5. Have Fun!!
 
 ![1](ScreenShots/1.png)
 ![2](ScreenShots/2.png)
