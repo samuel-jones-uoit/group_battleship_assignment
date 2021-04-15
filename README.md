@@ -9,8 +9,8 @@ This program has a GUI that is aesthetic and simple to follow by reading the pro
 
 To Run On The Same Machine:
 1. Compile Server.java using JRE 15.
-2. Compile Client.java using JRE 15.
-3. Compile Client2Test.java using JRE 15.
+2. Compile Client.java using JRE 15 and JavaFX.
+3. Compile Client2Test.java using JRE 15 and JavaFX.
 4. Run Server.java using JRE 15.
 5. Run Client.java using JRE 15.
 6. Run Client2Test.java using JRE 15.
