@@ -35,11 +35,11 @@ public class Server {
             running = true;
             // until this program is stopped
             while(running) {
-                System.out.println("---New Game---");
                 p1Socket = serverSocket.accept();
                 System.out.println("Player 1 connected");
                 p2Socket = serverSocket.accept();
                 System.out.println("Player 2 connected");
+                System.out.println("---New Game---");
                 Connection p1Connection = Connection.create(p1Socket);
                 Connection p2Connection = Connection.create(p2Socket);
                 Thread handlerThread = new Thread(new GameHandler(p1Connection, p2Connection));
