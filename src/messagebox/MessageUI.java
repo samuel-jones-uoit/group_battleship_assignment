@@ -3,25 +3,51 @@ package messagebox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 
+/**
+ *   Class Name: MessageUI
+ *   Class Description:
+ *   Displays messages
+ */
 public class MessageUI {
-    private final int WINDOW_WIDTH;
-    private final int WINDOW_HEIGHT;
+    private final int MESSAGEBOX_WIDTH;
+    private final int MESSAGEBOX_HEIGHT;
     private final ClientMessageBox chatBox;
     private final int SIZE;
     private Label[] display;
 
-    public MessageUI(final int WINDOW_WIDTH, final int WINDOW_HEIGHT, ClientMessageBox chatBox){
-        this.WINDOW_WIDTH = WINDOW_WIDTH;
-        this.WINDOW_HEIGHT = WINDOW_HEIGHT;
+    /**
+     *   Method Name: Constructor
+     *   Method Parameters:
+     *   final int MESSAGEBOX_WIDTH:
+     *      Width for messages
+     *   final int MESSAGEBOX_HEIGHT:
+     *      Height for messages
+     *   ClientMessageBox chatBox:
+     *      Chatbox
+     *   Method Description:
+     *   Regular constructor
+     *   Method Return: None
+     */
+    public MessageUI(final int MESSAGEBOX_WIDTH, final int MESSAGEBOX_HEIGHT, ClientMessageBox chatBox){
+        this.MESSAGEBOX_WIDTH = MESSAGEBOX_WIDTH;
+        this.MESSAGEBOX_HEIGHT = MESSAGEBOX_HEIGHT;
         this.chatBox = chatBox;
         this.SIZE = chatBox.getSize();
         this.chatBox.setParentUI(this);
     }
 
+    /**
+     *   Method Name: setup
+     *   Method Parameters: None
+     *   Method Description:
+     *   Sets up the UI
+     *   Method Return: GridPane
+     */
     public GridPane setup(){
         final double BOTTOM_PADDING = 20;
-        final double LABEL_WIDTH = (double) this.WINDOW_WIDTH  * 9 / 10;
-        final double LABEL_HEIGHT = (this.WINDOW_HEIGHT - BOTTOM_PADDING) / (this.SIZE + 1);
+        final double LABEL_WIDTH = (double) this.MESSAGEBOX_WIDTH * 9 / 10;
+        final double LABEL_HEIGHT = (this.MESSAGEBOX_HEIGHT - BOTTOM_PADDING) / (this.SIZE + 1);
+
         GridPane pane = new GridPane();
 
         display = new Label[this.SIZE];
@@ -33,7 +59,13 @@ public class MessageUI {
         }
         return pane;
     }
-
+    /**
+     *   Method Name: update
+     *   Method Parameters: None
+     *   Method Description:
+     *   Updates messages
+     *   Method Return: None
+     */
     public void update(){
         String msg;
         for (int i = this.SIZE - this.chatBox.getMessageCount(); i < this.chatBox.getSize(); i++){

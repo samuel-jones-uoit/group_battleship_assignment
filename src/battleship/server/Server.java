@@ -9,7 +9,7 @@ import java.net.Socket;
 /**
  *   Class Name: Server
  *   Class Description:
- *   File Share Server
+ *   Battleship Game Server
  */
 public class Server {
     private static boolean running;
@@ -20,20 +20,22 @@ public class Server {
     }
 
     /**
-     *   Method Name: runFileShare
+     *   Method Name: runBattleShipServer
      *   Method Parameters: None
      *   Method Description:
-     *   This method runs the File Sharing server
-     *   Method Return: Connection
+     *   This method runs the BattleShip Game Server
+     *   Method Return: None
      */
     private static void runBattleShipServer() {
         try{
+            System.out.println("Server starting up!");
             ServerSocket serverSocket = new ServerSocket(serverPort);
             Socket p1Socket;
             Socket p2Socket;
             running = true;
             // until this program is stopped
             while(running) {
+                System.out.println("---New Game---");
                 p1Socket = serverSocket.accept();
                 System.out.println("Player 1 connected");
                 p2Socket = serverSocket.accept();

@@ -71,14 +71,6 @@ public class Connection {
      */
     public String receive() throws IOException { return this.reader.readLine(); }
 
-    /**
-     *   Method Name: closeOutput
-     *   Method Parameters: None
-     *   Method Description:
-     *   This method closes the PrintWriter
-     *   Method Return: None
-     */
-    public void closeOutput(){ this.writer.close(); }
 
     /**
      *   Method Name: close

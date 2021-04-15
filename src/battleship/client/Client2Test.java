@@ -7,19 +7,28 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-
-import java.io.IOException;
-
+/**
+ *   Class Name: Client
+ *   Class Description:
+ *   BattleShip Player 2. Only used if 2 players wish to play on the game computer
+ */
 public class Client2Test extends Application {
 
-    Scene mainScene;
-
+    /**
+     *   Method Name: start
+     *   Method Parameters:
+     *   Stage primaryStage:
+     *      Stage used by the game
+     *   Method Description:
+     *   This method sets up the UI
+     *   Method Return: None
+     */
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("BattleShip 2");
+        primaryStage.setTitle("BattleShip P2");
+
 
         //Main Menu Scene GridPane
         GridPane mainGrid = new GridPane();
@@ -30,16 +39,6 @@ public class Client2Test extends Application {
         //Main Menu Buttons
         Button playButton = new Button("Play");
         playButton.setPrefWidth(200);
-        Button helpButton = new Button("Help");
-        helpButton.setPrefWidth(200);
-        Button leaderBoardButton = new Button("Leader Board");
-        leaderBoardButton.setPrefWidth(200);
-
-
-        mainGrid.add(playButton,0,1);
-        mainScene = new Scene(mainGrid, 800,600);
-        primaryStage.setScene(mainScene);
-        primaryStage.show();
 
         //playButton For Play Button
         playButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -50,7 +49,30 @@ public class Client2Test extends Application {
             }
 
         });
+
+
+        mainGrid.add(playButton,0,1);
+        Scene mainScene = new Scene(mainGrid, 800, 600);
+        primaryStage.setScene(mainScene);
+        primaryStage.show();
+
+        //playButton For Play Button
+        playButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                setShipsPositions.initDisplayBoard(primaryStage);
+                playGame();
+            }
+        });
+
     }
+    /**
+     *   Method Name: playGame
+     *   Method Parameters: None
+     *   Method Description:
+     *   This method starts a game of BattleShip
+     *   Method Return: None
+     */
     private static void playGame(){
         ClientGame localGame = new ClientGame("Player 2");
         Thread game = new Thread(localGame);

@@ -2,7 +2,11 @@ package battleship.server;
 
 import battleship.*;
 
-
+/**
+ *   Class Name: ServerGame
+ *   Class Description:
+ *   BattleShip Board (server perspective)
+ */
 public class ServerBoard {
     private static final int boardSize = 10;
     private final BoardTile[][] board;
@@ -14,12 +18,28 @@ public class ServerBoard {
     private Destroyer destroyer;
     private Ship[] shipsToPlace;
 
+    /**
+     *   Method Name: Constructor
+     *   Method Parameters:
+     *   RemotePlayer owner:
+     *      Player associated with board instance
+     *   Method Description:
+     *   This method creates a BattleShip board for the player
+     *   Method Return: None
+     */
     public ServerBoard(RemotePlayer player1) {
         this.owner = player1;
-        this.board = fillBoard();
-        setShips();
+        this.board = fillBoard(); // initialize
+        setShips(); // create ships
     }
 
+    /**
+     *   Method Name: fillBoard
+     *   Method Parameters: None
+     *   Method Description:
+     *   This method fills the board with water at the start of the game
+     *   Method Return: None
+     */
     private BoardTile[][] fillBoard() {
         BoardTile[][] board = new BoardTile[ServerBoard.boardSize][ServerBoard.boardSize];
         for (int r = 0; r < ServerBoard.boardSize; r++){
@@ -30,7 +50,17 @@ public class ServerBoard {
         return board;
     }
 
+    /**
+     *   Method Name: getViewableBoard
+     *   Method Parameters:
+     *   Player viewer:
+     *      Player that would like to see the board. Owner: show everything, enemy: show hits/misses
+     *   Method Description:
+     *   This method creates a 2d array of board tiles to show to the viewer
+     *   Method Return: None
+     */
     private BoardTile[][] getViewableBoard(RemotePlayer viewer){
+        // owner gets full access
         boolean fullAccess = viewer.is(this.owner);
         BoardTile[][] viewableBoard = new BoardTile[boardSize][boardSize];
         BoardTile currentTile;
@@ -46,7 +76,15 @@ public class ServerBoard {
         }
         return viewableBoard;
     }
-
+    /**
+     *   Method Name: toString
+     *   Method Parameters:
+     *   RemotePlayer viewer:
+     *      Viewer of the board
+     *   Method Description:
+     *   This method converts a board to string
+     *   Method Return: String representation
+     */
     public String toString(RemotePlayer viewer){
         StringBuilder result = new StringBuilder();
         BoardTile[][] viewableBoard = getViewableBoard(viewer);
@@ -59,6 +97,13 @@ public class ServerBoard {
         return result.toString();
     }
 
+    /**
+     *   Method Name: setShips
+     *   Method Parameters: None
+     *   Method Description:
+     *   This method initializes a bunch of ship objects and adds them to the placing queue
+     *   Method Return: None
+     */
     public void setShips(){
         battleShip = new Battleship();
         frigate = new Frigate();
@@ -73,45 +118,73 @@ public class ServerBoard {
         shipsToPlace[4] = aircraftCarrier;
     }
 
-    public void placeShip(Ship ship, Coordinates c1, Coordinates c2){
+    /**
+     *   Method Name: PlaceShip
+     *   Method Parameters:
+     *   Ship ship:
+     *      Ship being placed
+     *   Coordinates end1:
+     *      First end of the ship
+     *   Coordinates end2:
+     *      Other end of the ship
+     *   Method Description:
+     *   This method places a ship on a board
+     *   Method Return: None
+     */
+    public void placeShip(Ship ship, Coordinates end1, Coordinates end2){
+        // declare variables
         int minValue;
         int maxValue;
-        boolean horizontal = c1.getRow() == c2.getRow();
         int row = 0;
         int column = 0;
+        boolean horizontal = end1.getRow() == end2.getRow();
+        // if the ship is horizontal, set up the min and max correspondingly
         if (horizontal){
-            minValue = Math.min(c1.getColumn(), c2.getColumn());
-            maxValue = Math.max(c1.getColumn(), c2.getColumn());
-            row = c1.getRow();
-        }else{
-            minValue = Math.min(c1.getRow(), c2.getRow());
-            maxValue = Math.max(c1.getRow(), c2.getRow());
-            column = c1.getColumn();
+            minValue = Math.min(end1.getColumn(), end2.getColumn());
+            maxValue = Math.max(end1.getColumn(), end2.getColumn());
+            row = end1.getRow();
+        }else{ // if its vertical
+            minValue = Math.min(end1.getRow(), end2.getRow());
+            maxValue = Math.max(end1.getRow(), end2.getRow());
+            column = end1.getColumn();
         }
         ShipPart[] parts = ship.getParts();
         ShipPart newPart;
+        // loop through the board positions
         for (int currIndex = minValue; currIndex <= maxValue; currIndex++){
             if (horizontal){
                 column = currIndex;
             }else{
                 row = currIndex;
             }
-            // don't need to check if its been hit because haven't got to that part of the game
+            // create the ship parts
             newPart = new ShipPart(ship);
             parts[currIndex - minValue] = newPart;
+            // add a ship part tile containing the ship part to the board
             this.board[row][column] = new ShipPartTile("null", newPart);
         }
     }
 
-
+    /**
+     *   Method Name: hitSpot
+     *   Method Parameters:
+     *   Coordinates coordinates:
+     *      Position on the board
+     *   Method Description:
+     *   This method hits a spot on the board
+     *   Method Return: None
+     */
     public void hitSpot(Coordinates coordinates, RemotePlayer attacker){
+        // get the tile
         BoardTile b = getTile(coordinates);
         b.hit();
+        // if its water nothing more to do
         if (b instanceof WaterTile){
             attacker.notify("You missed!");
             return;
         }
-        ShipPartTile t = (ShipPartTile) b; // hopefully this works
+        // hit spot and alert users
+        ShipPartTile t = (ShipPartTile) b;
         ShipPart p = t.getShipPart();
         Ship parent = p.getParent();
         if (!parent.isAlive()){
@@ -121,32 +194,37 @@ public class ServerBoard {
         }
     }
 
-    public void display(RemotePlayer viewer){
-        BoardTile[][] accessibleBoard = this.getViewableBoard(viewer);
-        StringBuilder line;
-        for (int r = 0; r < boardSize; r++){
-            line = new StringBuilder();
-            line.append(Coordinates.convertRowToChar(r));
-            for (int c = 0; c < boardSize; c++){
-                line.append(" ");
-                line.append(accessibleBoard[r][c].getSymbol());
-            }
-            System.out.println(line);
-        }
-        line = new StringBuilder(" ");
-        for (int c = 0; c < boardSize; c++){
-            line.append(" ");
-            line.append(Coordinates.convertCIndex(c));
-        }
-        System.out.println(line);
-    }
+    /**
+     *   Method Name: isAlive
+     *   Method Parameters: None
+     *   Method Description:
+     *   This method checks if all ships are alive
+     *   Method Return: boolean
+     */
     public boolean isAlive() {
         return (battleShip.isAlive() || aircraftCarrier.isAlive() || destroyer.isAlive() || frigate.isAlive() || submarine.isAlive());
     }
 
+    /**
+     *   Method Name: getTile
+     *   Method Parameters:
+     *   Coordinates coordinates:
+     *      Get the tile at coordinates
+     *   Method Description:
+     *   This method checks some tiles on a grid to see if a ship can be placed on them
+     *   Method Return: boolean --> if free then true else false
+     */
     public BoardTile getTile(Coordinates coordinates){
         return this.board[coordinates.getRow()][coordinates.getColumn()];
     }
+
+    /**
+     *   Method Name: getShipsToPlace
+     *   Method Parameters: None
+     *   Method Description:
+     *   This method returns the ships yet to place
+     *   Method Return: Ship[]
+     */
     public Ship[] getShipsToPlace(){ return this.shipsToPlace; }
 
 }
