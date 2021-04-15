@@ -28,3 +28,8 @@ To Play:
 3. Click the other player's board and try to hit their ship
 4. Have Fun!!
 
+![1](ScreenShots/1.png)
+![2](ScreenShots/2.png)
+![3](ScreenShots/3.png)
+![4](ScreenShots/4.png)
+![5](ScreenShots/5.png)
