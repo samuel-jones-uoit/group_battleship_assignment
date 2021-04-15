@@ -46,7 +46,7 @@ public class Server {
                 handlerThread.start();
             }
         }catch (IOException e){
-            System.err.println("Failed to run file share server.");
+            System.err.println("Failed to run BattleShip Server - Network error");
         }
     }
 
